@@ -14,7 +14,9 @@
 
 module Jekyll
 
-  class WFSitemapPage < LanguagePage
+  require File.expand_path('../base_page.rb', __FILE__)
+
+  class WFSitemapPage < BasePage
 
     def initialize(site, pages)
       sitemapLayout = 'shared/sitemap.liquid';

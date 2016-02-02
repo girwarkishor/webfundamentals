@@ -103,6 +103,10 @@ module Jekyll
     end
 
     def render(context)
+      return <<-HTML
+<p>TODO</p>
+        HTML
+        
         page = context.environments.first["page"]
         site = context.registers[:site]
         path = site.source;
@@ -133,7 +137,6 @@ module Jekyll
 
     def render_codehighlighter(context, code, filepath)
       require 'pygments'
-
       # TODO(ianbarber): This is a bit of a fudge. We should know the definitive sample
       # path. I think we may want to have a central shared "code sample" object that is
       # knows how to get such paths for this and the sample_builder.

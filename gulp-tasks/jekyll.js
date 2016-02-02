@@ -6,7 +6,13 @@ var spawn = require('child_process').spawn;
 var runSequence = require('run-sequence');
 var plugins = require('gulp-load-plugins')();
 
+var jekyllProcess = null;
+
 gulp.task('rm-jekyll-build-directory', function() {
+  if (jekyllProcess) {
+    jekyllProcess.kill('SIGKILL');
+  }
+
   return del([GLOBAL.WF.build.jekyll], {dot: true});
 });
 
@@ -33,17 +39,26 @@ function spawnkJekyllBuild(buildConfig, cb) {
 
   var env = Object.create(process.env);
   if (GLOBAL.WF.options.lang) {
-    env.WFLang = GLOBAL.WF.options.lang;
+    env.WF_BUILD_LANG = GLOBAL.WF.options.lang;
   }
   if (GLOBAL.WF.options.section) {
-    env.WFSection = GLOBAL.WF.options.section;
+    env.WF_BUILD_SECTION = GLOBAL.WF.options.section;
   }
 
-  var jekyllProcess = spawn('bundle', params, {
+  jekyllProcess = spawn('bundle', params, {
       env: env,
       stdio: 'inherit'
     });
-  jekyllProcess.on('close', cb);
+  jekyllProcess.on('close', function(code, signal) {
+    jekyllProcess = null;
+
+    // If we ended due to a signal to die, restart the build
+    if (signal === 'SIGKILL') {
+      spawnkJekyllBuild(buildConfig, cb);
+    } else {
+      cb();
+    }
+  });
 }
 
 // jekyll:target [--lang <lang_code,lang_code,...|all>]

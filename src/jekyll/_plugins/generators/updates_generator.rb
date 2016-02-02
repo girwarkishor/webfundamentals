@@ -22,6 +22,8 @@ module Jekyll
     priority :low
 
     def generate(site)
+      return
+      
       @contentSource = site.config['WFContentSource']
       @numberOfResultsPerPage = 10
       @tags = []

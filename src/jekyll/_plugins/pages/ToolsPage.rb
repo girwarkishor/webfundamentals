@@ -14,10 +14,9 @@
 
 module Jekyll
 
-  require 'sanitize'
-  require File.expand_path('../LanguagePage.rb', __FILE__)
+  require File.expand_path('../base_page.rb', __FILE__)
 
-  class ToolsPage < LanguagePage
+  class ToolsPage < BasePage
 
     DEFAULT_HEAD_TITLE = 'Web Tools - Google Developers'
     DEFAULT_HEAD_DESCRIPTION = 'Web Developer Tools provides a ' +

@@ -23,6 +23,7 @@ module Jekyll
   class BuildEndGenerator < Generator
     priority :lowest
     def generate(site)
+      return
       organisePageTree(site.data['_context'])
 
       generateFeeds(site)

@@ -19,6 +19,7 @@ module Jekyll
     # Run near the end of the process.
     priority :low
     def generate(site)
+      return
       @contentSource = site.config['WFContentSource']
       @primaryLang = site.config['primary_lang']
       @destinationDirectory = File.join(@primaryLang, "resources/samples")

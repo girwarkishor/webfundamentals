@@ -14,10 +14,9 @@
 
 module Jekyll
 
-  require 'sanitize'
-  require File.expand_path('../LanguagePage.rb', __FILE__)
+  require File.expand_path('../base_page.rb', __FILE__)
 
-  class ShowsPage < LanguagePage
+  class ShowsPage < BasePage
     alias_method :parent_onBuildComplete, :onBuildComplete
 
     DEFAULT_HEAD_TITLE = 'Web Shows - Google Developers'

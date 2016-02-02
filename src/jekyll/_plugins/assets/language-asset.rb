@@ -14,24 +14,24 @@
 
 module Jekyll
 
+  # in a StaticFile relative_path is a read only attribute
+  # http://www.rubydoc.info/github/mojombo/jekyll/master/Jekyll/StaticFile#relative_path-instance_method
+
   class LanguageAsset < Jekyll::StaticFile
-    def initialize(site, relativeDir, filename, langcode)
+    def initialize(contentPath, relativeDir, filename)
+      # We only support english assets in the current implementation
+      @langcode = 'en'
+
       # IMPORTANT
-      # Be careful when altering the names of these
-      # class variables. Jekyll may be relying on the
-      # variable for other things.
-      @site = site
-      @base = File.join Dir.pwd, site.config['WFContentSource']
-      # We join here since relative_path is a read only attribute on StaticFile
-      # http://www.rubydoc.info/github/mojombo/jekyll/master/Jekyll/StaticFile#relative_path-instance_method
-      @dir  = File.join(langcode, relativeDir)
+      # @base, @dir and @name are used by Jekyll
+      @base = contentPath
+      @dir  = File.join(@langcode, relativeDir)
       @name = filename
-      @langcode = langcode
     end
 
 
     def destination(dest)
-      File.join(dest, File.join(@dir), @name)
+      File.join(dest, @dir, @name)
     end
   end
 

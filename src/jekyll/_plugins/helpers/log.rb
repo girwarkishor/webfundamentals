@@ -1,4 +1,4 @@
-# Copyright 2015 Google Inc. All rights reserved.
+# Copyright 2014 Google Inc. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,18 +13,19 @@
 # limitations under the License.
 
 module Jekyll
+  class LogHelper
 
-  require File.expand_path('../base_page.rb', __FILE__)
-  
-  class LayoutPage < BasePage
-
-    def initialize(site, langcode, relativeDirectory, filename)
-      super(site, File.join(site.config['WFStyleguideLocation'], relativeDirectory), filename + '.html', langcode)
-
-      # This will read the liquid file and asign the page the appropriate content
-      self.read_yaml(site.config['layouts'], File.join(relativeDirectory, filename + '.liquid'))
+    def self.log(title, msg)
+      Jekyll.logger.info "\n\n---------    " + title + "    ---------\n"
+      Jekyll.logger.info "  " + msg
+      Jekyll.logger.info "\n----------------------------------\n\n"
     end
 
+    def self.throwError(msg)
+      Jekyll.logger.error "\n\n---------    ERROR    ---------\n"
+      Jekyll.logger.error "  " + msg
+      Jekyll.logger.error "\n----------------------------------\n\n"
+      raise Exception.new(msg)
+    end
   end
-
 end

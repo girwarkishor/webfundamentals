@@ -23,6 +23,7 @@ module Jekyll
     priority :lowest
 
     def generate(site)
+      return
       showPages = getPages(site, ['shows'])
 
       allShows = []

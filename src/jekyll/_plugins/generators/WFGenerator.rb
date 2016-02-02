@@ -17,7 +17,7 @@ module Jekyll
   class WFGenerator < Generator
     priority :low
     def generate(site)
-
+      return
     end
 
     def getPages(site, sections)

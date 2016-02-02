@@ -14,23 +14,22 @@
 
 module Jekyll
 
-  require 'sanitize'
-  require File.expand_path('../LanguagePage.rb', __FILE__)
+  require File.expand_path('../base_page.rb', __FILE__)
 
-  class LandingPage < LanguagePage
+  class LandingPage < BasePage
 
     DEFAULT_HEAD_TITLE = 'Web Fundamentals - Google Developers'
     DEFAULT_HEAD_DESCRIPTION = 'Google Developers Web Updates ' +
       'contains the latest news from the Chrome, looking at new features ' +
       'on the open web and in Chrome DevTools.'
+    VALID_KEYS = ['udacity']
 
     def initialize(site, relativeDir, filename, langcode)
-      validKeys = ['udacity']
-      super(site, relativeDir, filename, langcode, validKeys)
+      super(site, relativeDir, filename, langcode, VALID_KEYS)
 
       self.data['html_css_file'] = site.config['WFBaseUrl'] + '/styles/landing.css';
       self.data['theme_color'] = '#3F51B5'
-      self.data['feed_name'] = 'Web Fundamentals - Google Developers'
+      self.data['feed_name'] = DEFAULT_HEAD_TITLE
     end
   end
 end

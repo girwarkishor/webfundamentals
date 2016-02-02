@@ -14,9 +14,9 @@
 
 module Jekyll
 
-  require 'sanitize'
+  require File.expand_path('../base_page.rb', __FILE__)
 
-  class UpdatePage < LanguagePage
+  class UpdatePage < BasePage
 
     DEFAULT_HEAD_TITLE = 'Web Updates - Google Developers'
     DEFAULT_HEAD_DESCRIPTION = 'Google Developers Web Updates ' +

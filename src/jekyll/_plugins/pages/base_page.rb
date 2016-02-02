@@ -15,8 +15,9 @@
 module Jekyll
 
   require 'sanitize'
+  require File.expand_path('../../helpers/log.rb', __FILE__)
 
-  class WFPage < Page
+  class BasePage < Page
 
     DEFAULT_HEAD_TITLE = 'Web - Google Developers'
     DEFAULT_HEAD_DESCRIPTION = 'Google Developers - Web Fundamentals';
@@ -25,10 +26,9 @@ module Jekyll
     alias superpath path
 
     attr_reader :raw_canonical_url, :canonical_url, :relative_url,
-      :directories, :context, :nextPage, :previousPage, :outOfDate
+      :directories, :context, :nextPage, :previousPage, :outOfDate, :langcode
 
-    def initialize(site, relativeDir, filename, addtionalYamlKeys=[])
-      @contentSource = site.config['WFContentSource']
+    def initialize(site, relativeDir, filename, langcode, addtionalYamlKeys=[])
 
       self.data = self.data ? self.data : {}
 
@@ -37,11 +37,13 @@ module Jekyll
       # class variables. Jekyll may be relying on the
       # variable for other things.
       @site = site
-      @base = File.join Dir.pwd, site.config['WFContentSource']
+      @contentSource = site.config['WFContentSource']
+      @base = File.join(Dir.pwd, @contentSource)
       @dir  = relativeDir
       @name = filename
       @directories = relativeDir.split(File::SEPARATOR)
       @addtionalYamlKeys = addtionalYamlKeys
+      @langcode = langcode ? langcode : "en"
       @defaultValidKeys = [
         'layout', 'title', 'description', 'order', 'translation_priority',
         'authors', 'translators', 'comments', 'published_on', 'updated_on',
@@ -62,6 +64,9 @@ module Jekyll
 
       # Check that all the keys in the YAML data is valid
       validateYamlData()
+
+      # Prepare default values
+      self.data['rtl'] = false
 
       if self.data['html_head_title'].nil?
         # There is no html_head_title defined in the YAML
@@ -101,6 +106,10 @@ module Jekyll
       else
         self.data['rss_feed_url'] = File.join(site.config['WFBaseUrl'], 'rss.xml')
         self.data['atom_feed_url'] = File.join(site.config['WFBaseUrl'], 'atom.xml')
+      end
+
+      if site.data["language_names"][@langcode].has_key?('rtl')
+        self.data['rtl'] = site.data["language_names"][@langcode]['rtl'];
       end
     end
 
@@ -166,25 +175,11 @@ module Jekyll
 
     # TODO: Change to throwing an error when we get closer to release
     def handleInvalidKeys(invalidKeys)
-      invalidKeysString = ''
-      invalidKeys.each { |key|
-        invalidKeysString += key + ', '
-      }
-
-      puts ''
-      puts '---------------------------------------------------------------'
-      puts ''
-      puts "Found " + invalidKeys.length.to_s + " invalid keys in " + @langcode + '/' + self.relative_path
-      puts 'Invalid keys: ' + invalidKeysString
-      puts ''
-      puts '---------------------------------------------------------------'
-      puts ''
-      Jekyll.logger.error "Error: Invalid Keys found in  " + @langcode + '/' + self.relative_path
-      puts ''
-      puts '---------------------------------------------------------------'
-      puts ''
-
-      raise "Invalid keys in YAML in " + @langcode + '/' + self.relative_path
+      LogHelper.throwError(
+        invalidKeys.length.to_s + " invalid YAML keys found in " +
+        File.join(@langcode, self.relative_path) + " " +
+        "[" + invalidKeys.join(",") + "]"
+      )
     end
 
     # Force generation is used when you are in a section that isn't published
@@ -248,9 +243,7 @@ module Jekyll
         return
       end
 
-      currentLevel = 0;
-      rootSection = nil;
-      otherSections = []
+      currentLevel = 0
       topLevelEntries = []
 
       # Pick out this pages rootSection and split out other sections
@@ -452,6 +445,8 @@ module Jekyll
     end
 
     def outOfDate
+      return false
+
       if self.langcode == site.config['primary_lang']
         # The primary lang should never be out of date
         return false

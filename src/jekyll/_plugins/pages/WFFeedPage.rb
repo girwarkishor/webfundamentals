@@ -14,9 +14,9 @@
 
 module Jekyll
 
-  require File.expand_path('../LanguagePage.rb', __FILE__)
+  require File.expand_path('../base_page.rb', __FILE__)
 
-  class WFFeedPage < LanguagePage
+  class WFFeedPage < BasePage
     @@FEED_TYPE_RSS = 0
     @@FEED_TYPE_ATOM = 1
 
