@@ -21,8 +21,6 @@ To build and run this project you need to have Ruby, Node and NPM.
 1. Set RVM Default to 2.2.0
     * `rvm install ruby-2.2.0`
     * `rvm --default use 2.2.0`
-1. Install [Pygments](http://pygments.org/)
-    * `easy_install pygments`
 1. Install bundler
     * `gem install bundler`
 1. Install [RubyGems](https://rubygems.org/) dependencies ([Jekyll](http://jekyllrb.com/) and [Kramdown](http://kramdown.gettalong.org/))

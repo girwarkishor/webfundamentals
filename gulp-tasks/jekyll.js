@@ -29,6 +29,7 @@ function spawnkJekyllBuild(buildConfig, cb) {
     GLOBAL.WF.src.jekyllConfigs + '/appengine.yml,' +
     GLOBAL.WF.src.jekyllConfigs + '/' + buildConfig);
   params.push('--trace');
+  params.push('--profile');
 
   var env = Object.create(process.env);
   if (GLOBAL.WF.options.lang) {

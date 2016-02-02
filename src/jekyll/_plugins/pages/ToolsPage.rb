@@ -24,8 +24,7 @@ module Jekyll
       'of instructions and tools to help you build your website.'
 
     def initialize(site, relativeDir, filename, langcode)
-      validKeys = []
-      super(site, relativeDir, filename, langcode, validKeys)
+      super(site, relativeDir, filename, langcode, [])
 
       self.data['html_css_file'] = site.config['WFBaseUrl'] + '/styles/tools.css';
       self.data['theme_color'] = '#2196F3'

@@ -14,7 +14,7 @@
 
 module Jekyll
 
-  require File.expand_path('../WFPage.rb', __FILE__)
+  require File.expand_path('../UpdatePage.rb', __FILE__)
 
   class UpdatesTagPage < UpdatePage
     def initialize(site, path, langcode, tag, updates)

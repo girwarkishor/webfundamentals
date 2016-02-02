@@ -102,7 +102,6 @@ module Jekyll
         self.data['rss_feed_url'] = File.join(site.config['WFBaseUrl'], 'rss.xml')
         self.data['atom_feed_url'] = File.join(site.config['WFBaseUrl'], 'atom.xml')
       end
-
     end
 
     # This is called when the main generator has finished creating pages
@@ -280,11 +279,6 @@ module Jekyll
       }
 
       self.data['contentnav'] = { "toc" => topLevelEntries }
-
-      #if @directories[currentLevel] == 'updates'
-      #  puts "HERE"
-      #  puts self.data['contentnav']
-      #end
     end
 
     # This method will try and find the translated version of a page
@@ -315,7 +309,7 @@ module Jekyll
     def read_yaml(base, name, opts = {})
       begin
         self.content = File.read(File.join(base, name),
-                             merged_file_read_opts(opts))
+                             Utils.merged_file_read_opts(site, opts))
         if content =~ /\A(---\s*\n.*?\n?)^((---|\.\.\.)\s*$\n?)/m
           self.content = $POSTMATCH
           self.data = SafeYAML.load($1)
@@ -350,9 +344,9 @@ module Jekyll
 
     def path
       path = File.join(site.config['WFContentSource'], @langcode, @dir, @name)
-      if !File.exist?(path)
-        return nil
-      end
+      #if !File.exist?(path)
+      #  return File.join(@dir, @name)
+      #end
       path
     end
 
@@ -477,7 +471,7 @@ module Jekyll
       return false
     end
 
-    # Convert this post into a Hash for use in Liquid templates.
+  # Convert this post into a Hash for use in Liquid templates.
   #
   # Returns <Hash>
   def to_liquid(attrs = ATTRIBUTES_FOR_LIQUID)
