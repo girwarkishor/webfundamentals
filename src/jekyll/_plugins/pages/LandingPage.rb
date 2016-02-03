@@ -24,8 +24,8 @@ module Jekyll
       'on the open web and in Chrome DevTools.'
     VALID_KEYS = ['udacity']
 
-    def initialize(site, relativeDir, filename, langcode)
-      super(site, relativeDir, filename, langcode, VALID_KEYS)
+    def initialize(site, relativeDir, filename, langcode, leafNode)
+      super(site, relativeDir, filename, langcode, VALID_KEYS, leafNode)
 
       self.data['html_css_file'] = site.config['WFBaseUrl'] + '/styles/landing.css';
       self.data['theme_color'] = '#3F51B5'

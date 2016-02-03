@@ -165,11 +165,11 @@ translation_priority: 1
       {% for subdirectory in page.context.subdirectories %}
         {% if subdirectory.subdirectories.size > 0 %}
         <div class="mdl-cell mdl-cell--4-col wf-tools-guide">
-          <h3 class="wf-tools-guide__title"><a href="{{subdirectory.index.relative_url}}">{{subdirectory.index.title}}</a></h3>
+          <h3 class="wf-tools-guide__title"><a href="{{subdirectory.index.relativeUrl}}">{{subdirectory.index.title}}</a></h3>
           <p class="wf-tools-guide__description">{{subdirectory.index.description}}</p>
           {% if subdirectory.subdirectories %}
               {% for sub in subdirectory.subdirectories %}
-                <p class="wf-tools-guide__section-link"><a href="{{sub.index.relative_url}}">{{sub.index.title}}</a></p>
+                <p class="wf-tools-guide__section-link"><a href="{{sub.index.relativeUrl}}">{{sub.index.title}}</a></p>
               {% endfor %}
           {% endif %}
         </div>

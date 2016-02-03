@@ -21,8 +21,8 @@ module Jekyll
 
   class UpdatePostPage < UpdatePage
 
-    def initialize(site, relativeDir, filename, langcode)
-      super(site, relativeDir, filename, langcode)
+    def initialize(site, relativeDir, filename, langcode, leafNode)
+      super(site, relativeDir, filename, langcode, leafNode)
     end
 
     def getJekyllsRelativeUrl()

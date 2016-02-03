@@ -84,7 +84,7 @@ updated_on: 2015-10-06
 
 We are building a site that works across multiple screen sizes and device
 types. In the [previous
-article]({{page.previousPage.relative_url}}), we crafted the
+article]({{page.previousPage.relativeUrl}}), we crafted the
 Information Architecture of the page and created a basic structure.
 In this guide, we will take our basic structure with content and turn it into
 a beautiful page that is responsive across a large number of screen sizes.

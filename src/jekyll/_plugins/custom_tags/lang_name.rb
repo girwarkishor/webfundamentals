@@ -1,4 +1,4 @@
-# Copyright 2015 Google Inc. All rights reserved.
+# Copyright 2014 Google Inc. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,18 +13,12 @@
 # limitations under the License.
 
 module Jekyll
-
-  require File.expand_path('../base_page.rb', __FILE__)
-
-  class LayoutPage < BasePage
-
-    def initialize(site, langcode, relativeDirectory, filename, leafNode)
-      super(site, File.join(site.config['WFStyleguideLocation'], relativeDirectory), filename + '.html', langcode, leafNode)
-
-      # This will read the liquid file and asign the page the appropriate content
-      self.read_yaml(site.config['layouts'], File.join(relativeDirectory, filename + '.liquid'))
+  module LanguageName
+    def lang_name(input)
+      site = @context.registers[:site]
+      site.data["language_names"][input]['name']
     end
-
   end
-
 end
+
+ Liquid::Template.register_filter(Jekyll::LanguageName)

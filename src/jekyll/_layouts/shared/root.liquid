@@ -3,7 +3,7 @@
 <meta name="theme-color" content="{{ page.theme_color }}">
 
 <link rel="manifest" href="{{site.WFBaseUrl}}/manifest.json">
-<link rel="canonical" href="{{page.raw_canonical_url}}">
+<link rel="canonical" href="{{page.noLanguageCanonicalUrl}}">
 <link rel="icon" href="{{site.WFBaseUrl}}/imgs/favicon.ico" />
 
 <link rel="stylesheet" media="screen" href="{{page.html_css_file}}" />
@@ -29,7 +29,7 @@
 
 <!-- Translated Page -->
 {% for translated_page in page.translations %}
-<link rel="alternate" hreflang="{{translated_page[0]}}" href="{{translated_page[1].canonical_url}}" />
+<link rel="alternate" hreflang="{{translated_page[0]}}" href="{{translated_page[1].canonicalUrl}}" />
 {% endfor %}
 
 <link rel="publisher" href="https://plus.google.com/+GoogleChromeDevelopers">
@@ -37,7 +37,7 @@
 
 <meta property="og:site_name" content="{{ page.html_head_title }}" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="{{page.canonical_url}}" />
+<meta property="og:url" content="{{page.canonicalUrl}}" />
 <meta property="og:publisher" content="https://www.facebook.com/googlechrome" />
 <meta property="og:image" content="{{ page.html_head_social_img }}" />
 {% if main_author.facebook %}
@@ -109,7 +109,7 @@
         {{"view_source" | localize_string}}
       </div>
     </a>
-    <a class="wf-navdrawer__bottom-link" href="{{site.github.root}}/issues/new?title={{"[" | uri_escape }}{{page.langcode | upcase}}{{"] Feedback for: " | uri_escape }}{{page.relative_url | uri_escape }}" target="_blank">
+    <a class="wf-navdrawer__bottom-link" href="{{site.github.root}}/issues/new?title={{"[" | uri_escape }}{{page.langcode | upcase}}{{"] Feedback for: " | uri_escape }}{{page.relativeUrl | uri_escape }}" target="_blank">
       <div class="wf-navdrawer__bottom-link-container">
         <img src="{{ site.WFBaseUrl }}/imgs/feedback.svg" alt="feedback icon" />
         {{"submit_feedback" | localize_string}}

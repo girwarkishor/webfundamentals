@@ -16,7 +16,6 @@ module Jekyll
 
   module LocalizeString
     def localize_string(input)
-
       # Get the page, so we determine which language we're in
       page = @context.registers[:page]
 
@@ -42,14 +41,6 @@ module Jekyll
       return result
     end
   end
-
-  module LanguageName
-    def lang_name(input)
-      site = @context.registers[:site]
-      site.data["language_names"][input]['name']
-    end
-  end
 end
 
- Liquid::Template.register_filter(Jekyll::LanguageName)
  Liquid::Template.register_filter(Jekyll::LocalizeString)

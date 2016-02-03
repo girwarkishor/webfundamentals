@@ -17,7 +17,7 @@ module Jekyll
   require File.expand_path('../UpdatePage.rb', __FILE__)
 
   class UpdatesTagPage < UpdatePage
-    def initialize(site, path, langcode, tag, updates)
+    def initialize(site, path, langcode, tag, updates, leafNode)
       if path.nil?
         dir = File.join('updates', 'tags')
       else

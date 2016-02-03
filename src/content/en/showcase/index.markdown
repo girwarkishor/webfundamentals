@@ -46,7 +46,7 @@ description: "Showcase is a page highlighting some of the great web apps availab
       <h4>{{caseStudy.title}}</h4>
       <h5>{{caseStudy.subtitle}}</h5>
       <p>{{caseStudy.description}}</p>
-      <a href="{{caseStudy.canonical_url}}">Read the case study</a>
+      <a href="{{caseStudy.canonicalUrl}}">Read the case study</a>
     </div>
   </div>
 </div>
@@ -59,7 +59,7 @@ description: "Showcase is a page highlighting some of the great web apps availab
     </p>
     {% for pageInSection in list reversed %}
       {% capture imageURL %}{{site.WFBaseUrl}}/showcase/{{pageInSection.context.id}}/{{pageInSection.featured_image}}{% endcapture %}
-      {% include shared/base_card.liquid title=pageInSection.title text=pageInSection.description linkHref=pageInSection.canonical_url imgUrl=imageURL linkText=pageInSection.title %}
+      {% include shared/base_card.liquid title=pageInSection.title text=pageInSection.description linkHref=pageInSection.canonicalUrl imgUrl=imageURL linkText=pageInSection.title %}
     {% endfor %}
   </div>
 </div>

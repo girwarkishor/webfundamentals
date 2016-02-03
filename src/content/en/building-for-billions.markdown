@@ -10,8 +10,8 @@ title: "Building for Billions"
     <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
       <h3>Building for Billions</b></h3>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit 
-        amet turpis faucibus, sodales ante nec, scelerisque orci. Nullam 
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit
+        amet turpis faucibus, sodales ante nec, scelerisque orci. Nullam
         aliquam sapien metus, vitae blandit lorem lobortis in.
       </p>
     </div>
@@ -31,9 +31,9 @@ title: "Building for Billions"
     <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
       <h3>Generic Title Of Some Kind</h3>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque 
-        sit amet turpis faucibus, sodales ante nec, scelerisque orci. Nullam 
-        aliquam sapien metus, vitae blandit lorem lobortis in. 
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
+        sit amet turpis faucibus, sodales ante nec, scelerisque orci. Nullam
+        aliquam sapien metus, vitae blandit lorem lobortis in.
         Aliquam erat volutpat.
       </p>
       <a href="#">Develop, engage &amp; earn</a>

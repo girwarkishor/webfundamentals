@@ -245,8 +245,8 @@
         {% break %}
       {% endif %}
 
-      {% if pageInSection.canonical_url != page.canonical_url %}
-        {% include shared/base_card.liquid title=pageInSection.title text=pageInSection.description linkHref=pageInSection.canonical_url imgUrl=pageInSection.featured_image linkText="View" %}
+      {% if pageInSection.canonicalUrl != page.canonicalUrl %}
+        {% include shared/base_card.liquid title=pageInSection.title text=pageInSection.description linkHref=pageInSection.canonicalUrl imgUrl=pageInSection.featured_image linkText="View" %}
         {% assign count = count | plus:1 %}
       {% endif %}
     {% endfor %}

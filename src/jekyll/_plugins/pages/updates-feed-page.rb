@@ -18,8 +18,8 @@ module Jekyll
 
   class UpdatesFeedPage < WFFeedPage
 
-    def initialize(site, dir, langcode, pages, feedType)
-      super(site, dir, langcode, pages, feedType)
+    def initialize(site, dir, langcode, pages, feedType, leafNode)
+      super(site, dir, langcode, pages, feedType, leafNode)
 
       self.data['feed_title'] = 'Web Updates - Google Developers'
       self.data['feed_description'] = 'The latest and freshest updates from the Web teams at Google. Chrome, Tooling and more.'

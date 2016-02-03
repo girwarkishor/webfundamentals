@@ -16,6 +16,8 @@ module Jekyll
 
   require File.expand_path('../helpers/log.rb', __FILE__)
   require File.expand_path('../pages/base_page.rb', __FILE__)
+  require File.expand_path('../models/branch_node.rb', __FILE__)
+  require File.expand_path('../models/leaf_node.rb', __FILE__)
 
   # This generator will find all the files in the
   # directory where all the markdown is stored
@@ -37,23 +39,22 @@ module Jekyll
       @markdownExtensions = [".markdown", ".md", ".html"]
       @site = site
       @contentFilepath = File.join(Dir.pwd, @contentSource)
+      @initialPath = File.join(@contentFilepath, @primaryLang)
+      @relativePath = ''
+      @tree = BranchNode.new(nil)
 
       self.performInitialChecks()
 
-      self.prepareSiteVariables(site)
+      self.prepareInitialVariables(site)
 
       # Make the language code and matching language name available
       # to all of the site
       # site.data["primes"] = translations(site)
 
-      initialPath = File.join(@contentFilepath, @primaryLang)
-      relativePath = ''
-      if ENV.has_key?('WF_BUILD_SECTION')
-        initialPath = File.join(initialPath, ENV['WF_BUILD_SECTION'])
-        relativePath = ENV['WF_BUILD_SECTION']
-      end
 
-      traverseFilePath(initialPath, relativePath)
+
+
+      traverseFilePath(@initialPath, @relativePath, @tree)
     end
 
     def performInitialChecks()
@@ -79,12 +80,17 @@ module Jekyll
       end
     end
 
-    def prepareSiteVariables(site)
+    def prepareInitialVariables(site)
       site.data["contributors"] = self.getContributors(site)
       site.data["language_names"] = YAML.load_file(site.config['WFLangNames'])
 
       if ENV.has_key?('WF_BUILD_LANG')
         @langsAvailable = [ENV['WF_BUILD_LANG']]
+      end
+
+      if ENV.has_key?('WF_BUILD_SECTION')
+        @initialPath = File.join(initialPath, ENV['WF_BUILD_SECTION'])
+        @relativePath = ENV['WF_BUILD_SECTION']
       end
     end
 
@@ -148,7 +154,7 @@ module Jekyll
       allPages
     end
 
-    def traverseFilePath(filePatternPath, relativePath = '')
+    def traverseFilePath(filePatternPath, relativePath = '', currentBranch)
       fileEntries = Dir.entries(filePatternPath)
 
       directories = []
@@ -162,14 +168,18 @@ module Jekyll
 
           directories << fileEntry
         else
-          handleFile(relativePath, fileEntry, @primaryLang)
+          handleFile(currentBranch, relativePath, fileEntry, @primaryLang)
         end
       }
 
       directories.each{ |directoryName|
+        branchNode = BranchNode.new(currentBranch)
+        currentBranch.addBranchChildNode(branchNode)
+
         traverseFilePath(
           File.join(filePatternPath, directoryName),
-          File.join(relativePath, directoryName)
+          File.join(relativePath, directoryName),
+          branchNode
         )
       }
     end
@@ -190,7 +200,7 @@ module Jekyll
 
     # relativePath is the path relative to the current language
     # (i.e. en/folder/test.txt will have a relative path of folder/test.txt)
-    def handleFile(relativePath, fileName, langcode)
+    def handleFile(currentBranch, relativePath, fileName, langcode)
       # If the page is a markdown file we want to create a jekyll page
       if !(@markdownExtensions.include? File.extname(fileName))
         @site.static_files << LanguageAsset.new(@contentFilepath, relativePath, fileName)
@@ -198,10 +208,14 @@ module Jekyll
       end
 
       # If we are here, we have a markdown page
-      page = createPage(@site, relativePath, fileName, langcode)
-      #  page.data['_context'] = pagesTrees
+      leafNode = LeafNode.new(currentBranch)
 
-      translatedPages = getTranslatedPages(relativePath, fileName)
+      page = createPage(@site, relativePath, fileName, langcode, leafNode)
+      translatedPages = getTranslatedPages(relativePath, fileName, leafNode)
+
+      leafNode.setPages(page, translatedPages)
+      currentBranch.addLeafChildNode(leafNode)
+      #  page.data['_context'] = pagesTrees
 
       #  translated_pages = {'en' => page}
       #  page.data["translations"] = translated_pages
@@ -222,7 +236,7 @@ module Jekyll
       @site.pages.concat(translatedPages)
     end
 
-    def getTranslatedPages(relativePath, fileName)
+    def getTranslatedPages(relativePath, fileName, leafNode)
       translatedLangcodes =  @langsAvailable.select { |translationLangCode|
         includeLanguage = true
         if translationLangCode == @primaryLang
@@ -241,7 +255,8 @@ module Jekyll
           @site,
           relativePath,
           fileName,
-          langcode)
+          langcode,
+          leafNode)
 
         # translationPage.data.merge!('is_localized' => true, 'is_localization' => true)
 
@@ -304,7 +319,7 @@ module Jekyll
     #end
 
     # Creates a new Page which must be a class that inherits from WFPage
-    def createPage(site, relative_dir, file_name, langcode)
+    def createPage(site, relative_dir, file_name, langcode, leafNode)
       # Don't process underscore files.
       if relative_dir =~ /^_/
         return nil
@@ -316,21 +331,21 @@ module Jekyll
       page = nil
       case rootFolderName
       when 'updates'
-        page = UpdatePostPage.new(site, relative_dir, file_name, langcode)
+        page = UpdatePostPage.new(site, relative_dir, file_name, langcode, leafNode)
       when 'fundamentals'
-        page = FundamentalsPage.new(site, relative_dir, file_name, langcode)
+        page = FundamentalsPage.new(site, relative_dir, file_name, langcode, leafNode)
       when 'shows'
-        page = ShowsPage.new(site, relative_dir, file_name, langcode)
+        page = ShowsPage.new(site, relative_dir, file_name, langcode, leafNode)
       when 'tools'
-        page = ToolsPage.new(site, relative_dir, file_name, langcode)
+        page = ToolsPage.new(site, relative_dir, file_name, langcode, leafNode)
       when 'showcase'
-        page = ShowcasePage.new(site, relative_dir, file_name, langcode)
+        page = ShowcasePage.new(site, relative_dir, file_name, langcode, leafNode)
       when 'styleguide'
-        page = BasePage.new(site, relative_dir, file_name, langcode)
+        page = BasePage.new(site, relative_dir, file_name, langcode, leafNode)
       when '.'
-        page = LandingPage.new(site, relative_dir, file_name, langcode)
+        page = LandingPage.new(site, relative_dir, file_name, langcode, leafNode)
       when 'resources'
-        page = BasePage.new(site, relative_dir, file_name, langcode)
+        page = BasePage.new(site, relative_dir, file_name, langcode, leafNode)
       else
         LogHelper.throwError("main-generator.rb: Unsure what Page to use for markdown files in the \"" +
           rootFolderName + "\" directory.")

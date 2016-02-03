@@ -20,7 +20,7 @@ module Jekyll
     @@FEED_TYPE_RSS = 0
     @@FEED_TYPE_ATOM = 1
 
-    def initialize(site, relative_dir, langcode, pages, feedType)
+    def initialize(site, relative_dir, langcode, pages, feedType, leafNode)
       feedLayout = 'shared/rss.liquid';
       feedFilename = 'rss.xml';
       if feedType == @@FEED_TYPE_ATOM
@@ -28,7 +28,7 @@ module Jekyll
         feedFilename = 'atom.xml';
       end
 
-      super(site, relative_dir, feedFilename, langcode)
+      super(site, relative_dir, feedFilename, langcode, leafNode)
 
       # This will read the liquid file and asign the page the appropriate content
       self.read_yaml(File.join(site.source, '_layouts'), feedLayout)

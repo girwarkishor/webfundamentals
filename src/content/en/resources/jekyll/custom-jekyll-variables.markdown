@@ -109,32 +109,32 @@ For example, this page has a Jekyll URL of:
 {% endhighlight %}
 
 Notice how there is no /web/ at the beginning of it? Instead of `page.url`,
-use `page.canonical_url` or `page.relative_url`. The big advantage of this
+use `page.canonicalUrl` or `page.relativeUrl`. The big advantage of this
 is that it will also account for language of the current page.
 
-## page.canonical_url
+## page.canonicalUrl
 
 Canonical URL has some filtering done on it to become a canonical url and
 will always be the full path.
 
 <pre>
-&#123;&#123;page.canonical_url&#125;&#125;
+&#123;&#123;page.canonicalUrl&#125;&#125;
 </pre>
 
 {% highlight text %}
-{{page.canonical_url}}
+{{page.canonicalUrl}}
 {% endhighlight %}
 
-## page.relative_url
+## page.relativeUrl
 
 The relative url is the relative url for a page from the root of the domain
 
 <pre>
-&#123;&#123;page.relative_url&#125;&#125;
+&#123;&#123;page.relativeUrl&#125;&#125;
 </pre>
 
 {% highlight text %}
-{{page.relative_url}}
+{{page.relativeUrl}}
 {% endhighlight %}
 
 ## page.outOfDate

@@ -18,14 +18,14 @@ module Jekyll
 
   class ShowsFeedPage < WFFeedPage
 
-    def initialize(site, path, langcode, pages, feedType)
+    def initialize(site, path, langcode, pages, feedType, leafNode)
       if path.nil?
         dir = File.join('shows')
       else
         dir = path
       end
 
-      super(site, dir, langcode, pages, feedType)
+      super(site, dir, langcode, pages, feedType, leafNode)
 
       self.data = self.data ? self.data : {}
 

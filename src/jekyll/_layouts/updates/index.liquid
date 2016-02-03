@@ -16,7 +16,7 @@
     {% for article in page.updates %}
       {% assign authorKey = article.authors[0] %}
       {% assign author = site.data["contributors"][authorKey] %}
-      {% include updates/card.liquid title=article.title text=article.description author=author date=article.updated_on imgUrl=article.featured_image linkHref=article.canonical_url %}
+      {% include updates/card.liquid title=article.title text=article.description author=author date=article.updated_on imgUrl=article.featured_image linkHref=article.canonicalUrl %}
     {% endfor %}
   </div>
 </div>

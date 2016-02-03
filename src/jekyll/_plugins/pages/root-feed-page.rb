@@ -18,8 +18,8 @@ module Jekyll
 
   class RootFeedPage < WFFeedPage
 
-    def initialize(site, langcode, pages, feedType)
-      super(site, File.join('.'), langcode, pages, feedType)
+    def initialize(site, langcode, pages, feedType, leafNode)
+      super(site, File.join('.'), langcode, pages, feedType, leafNode)
 
       self.data = self.data ? self.data : {}
 

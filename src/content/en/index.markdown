@@ -18,7 +18,7 @@ title: "Web @ Google Developers"
     <div class="mdl-cell mdl-cell--12-col wf-showcase__title">
       <h2>Next Generation Web</h2>
       <p class="mdl-typography--font-light">
-        The average user visits 100+ sites per month on the mobile web - 
+        The average user visits 100+ sites per month on the mobile web -
         will yours be one of them?
       </p>
     </div>
@@ -52,7 +52,7 @@ title: "Web @ Google Developers"
       <div class="wf-landing-whatsnew">
         <h4>Push notifications</h4>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do 
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </p>
         <a href="/web/fundamentals/">Learn more</a>
@@ -60,7 +60,7 @@ title: "Web @ Google Developers"
       <div class="wf-landing-whatsnew">
         <h4>Add to home screen</h4>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do 
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </p>
         <a href="/web/fundamentals/">Learn more</a>
@@ -75,9 +75,9 @@ title: "Web @ Google Developers"
     <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
       <h3>Web<b>Fundamentals</b></h3>
       <p>
-        WebFundamentals is a comprehensive resource for web development best 
-        practices, designed to help you add the right features and experiences 
-        to your web project. If you’re new to web development or just looking 
+        WebFundamentals is a comprehensive resource for web development best
+        practices, designed to help you add the right features and experiences
+        to your web project. If you’re new to web development or just looking
         to make your project better, we’ve got you covered.
       </p>
       <a href="/web/fundamentals/">Jump in</a>
@@ -124,8 +124,8 @@ title: "Web @ Google Developers"
     <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
       <h3>Success stories</h3>
       <p>
-        See how our partners, from publishing to ecommerce, drive discovery 
-        and re-engagement with a rich web experience. More traffic and users 
+        See how our partners, from publishing to ecommerce, drive discovery
+        and re-engagement with a rich web experience. More traffic and users
         means more revenue for your business.
       </p>
       <a href="/web/showcase/">Showcase</a>
@@ -143,7 +143,7 @@ title: "Web @ Google Developers"
     {% assign authorKey = post.authors[0] %}
     {% assign author = site.data["contributors"][authorKey] %}
     <div class="mdl-cell mdl-cell--4-col mdl-card mdl-shadow--2dp wf-card">
-      <a style="background-image:url({{post.featured_image}})" class="mdl-card__title" href="{{post.relative_url}}">
+      <a style="background-image:url({{post.featured_image}})" class="mdl-card__title" href="{{post.relativeUrl}}">
         <div>
           <h2 class="mdl-card__title-text">{{post.title}}</h2>
         </div>
@@ -174,12 +174,10 @@ title: "Web @ Google Developers"
     <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
       <h3>Google APIs for the web</h3>
       <p>
-        Simplify your web development, grow your user base, and monetize more 
+        Simplify your web development, grow your user base, and monetize more
         effectively with Google services for the web.
       </p>
       <a href="#">Develop, engage &amp; earn</a>
     </div>
   </div>
 </div>
-
-

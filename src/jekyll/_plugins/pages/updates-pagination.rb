@@ -18,7 +18,7 @@ module Jekyll
 
   class UpdatesPaginationPage < UpdatePage
 
-    def initialize(site, path, langcode, pages, paginationIndex, totalPaginationPages, title = nil)
+    def initialize(site, path, langcode, pages, paginationIndex, totalPaginationPages, title = nil, leafNode)
       if path.nil?
         dir = 'updates'
         title = 'Updates'
@@ -35,7 +35,7 @@ module Jekyll
         name = (paginationIndex + 1).to_s + ".html"
       end
 
-      super(site, dir, name, langcode)
+      super(site, dir, name, langcode, leafNode)
 
       self.data['html_css_file'] = site.config['WFBaseUrl'] + '/styles/updates.css';
 

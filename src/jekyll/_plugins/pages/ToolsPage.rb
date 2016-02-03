@@ -22,8 +22,8 @@ module Jekyll
     DEFAULT_HEAD_DESCRIPTION = 'Web Developer Tools provides a ' +
       'of instructions and tools to help you build your website.'
 
-    def initialize(site, relativeDir, filename, langcode)
-      super(site, relativeDir, filename, langcode, [])
+    def initialize(site, relativeDir, filename, langcode, leafNode)
+      super(site, relativeDir, filename, langcode, [], leafNode)
 
       self.data['html_css_file'] = site.config['WFBaseUrl'] + '/styles/tools.css';
       self.data['theme_color'] = '#2196F3'

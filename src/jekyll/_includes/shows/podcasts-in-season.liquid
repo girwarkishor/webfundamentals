@@ -6,7 +6,7 @@
       {% capture text %}
         <b>{{podcast.title}}</b> {{podcast.description}}
       {% endcapture %}
-      {% include shows/podcast-card.liquid linkHref=podcast.relative_url text=text imgUrl=podcast.podcast_image_url  %}
+      {% include shows/podcast-card.liquid linkHref=podcast.relativeUrl text=text imgUrl=podcast.podcast_image_url  %}
     {% endif %}
   {% endfor %}
 </div>

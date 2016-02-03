@@ -21,9 +21,9 @@ module Jekyll
     DEFAULT_HEAD_TITLE = 'Google Web Showcase - Google Developers'
     DEFAULT_HEAD_DESCRIPTION = 'Google Web Showcase - Google Developers'
 
-    def initialize(site, relativeDir, filename, langcode)
+    def initialize(site, relativeDir, filename, langcode, leafNode)
       validKeys = ['tags', 'showcase', 'featured_image', 'subtitle']
-      super(site, relativeDir, filename, langcode, validKeys)
+      super(site, relativeDir, filename, langcode, validKeys, leafNode)
 
       self.data['html_css_file'] = site.config['WFBaseUrl'] + '/styles/showcases.css';
       self.data['theme_color'] = '#2E7D32'

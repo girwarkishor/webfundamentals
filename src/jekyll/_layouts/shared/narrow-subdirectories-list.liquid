@@ -19,14 +19,14 @@
   <ol class="wf-subdirectory-list__pages-list mdl-cell mdl-cell--6-col">
   {% if subdirectory.pages.size == 0 and subdirectory.subdirectories.size > 0 %}
     {% for subdir in subdirectory.subdirectories %}
-    <li class="wf-subdirectory-list__pages-list-item"><a href="{{subdir.index.relative_url}}">{{subdir.index.title}}</a></li>
+    <li class="wf-subdirectory-list__pages-list-item"><a href="{{subdir.index.relativeUrl}}">{{subdir.index.title}}</a></li>
     {% endfor %}
   {% else %}
     <li class="wf-subdirectory-list__pages-list-item">
-      <a href="{{subdirectory.index.relative_url}}">{{subdirectory.index.title}}</a>
+      <a href="{{subdirectory.index.relativeUrl}}">{{subdirectory.index.title}}</a>
     </li>
     {% for page in subdirectory.pages %}
-    <li class="wf-subdirectory-list__pages-list-item"><a href="{{page.relative_url}}">{{page.title}}</a></li>
+    <li class="wf-subdirectory-list__pages-list-item"><a href="{{page.relativeUrl}}">{{page.title}}</a></li>
     {% endfor %}
   {% endif %}
   </ol>

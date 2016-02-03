@@ -23,11 +23,11 @@ module Jekyll
       'contains the latest news from the Chrome, looking at new features ' +
       'on the open web and in Chrome DevTools.'
 
-    def initialize(site, relativeDir, filename, langcode)
+    def initialize(site, relativeDir, filename, langcode, leafNode)
       validKeys = [
         'tags', 'featured_image', 'source_name', 'source_url'
       ]
-      super(site, relativeDir, filename, langcode, validKeys)
+      super(site, relativeDir, filename, langcode, validKeys, leafNode)
 
       self.data['html_css_file'] = site.config['WFBaseUrl'] + '/styles/updates.css';
       self.data['theme_color'] = '#4527A0'
