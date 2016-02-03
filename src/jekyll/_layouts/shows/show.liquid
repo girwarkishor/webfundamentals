@@ -5,8 +5,8 @@
 <div class="page-content top-padding">
 
   <!-- Latest Episode -->
-  {% if page.context.subdirectories.size > 0 %}
-    {% assign latestSeason = page.context.subdirectories.last %}
+  {% if page.subdirectories.size > 0 %}
+    {% assign latestSeason = page.subdirectories.last %}
     {% assign latestEpisode = latestSeason.pages.last %}
     <h6 class="wf-shows__subtitle">Latest Episode</h6>
     <h3 class="wf-shows__title">{{ latestEpisode.title }}</h3>
@@ -25,7 +25,7 @@
     <h6 class="mdl-cell mdl-cell--12-col wf-shows__subtitle">
       Previous Seasons &amp; Episodes
     </h6>
-    {% for subdirectory in page.context.subdirectories reversed %}
+    {% for subdirectory in page.subdirectories reversed %}
       {% comment %}
         TODO(gauntface): find better solution for podcasts in shows.
         See: https://github.com/google/WebFundamentals/issues/2182

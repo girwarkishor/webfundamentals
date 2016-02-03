@@ -44,7 +44,7 @@ To display all the pages title you can use liquid like so:
 
 <pre>
 &lt;ol&gt;
-&#123;% for page in page.context.pages %&#125;
+&#123;% for page in page.siblingPages %&#125;
   &lt;li&gt;
     &#123;&#123;page.title&#125;&#125;
     &lt;/li&gt;
@@ -53,7 +53,7 @@ To display all the pages title you can use liquid like so:
 </pre>
 
 <ol>
-  {% for page in page.context.pages %}
+  {% for page in page.siblingPages %}
     <li>
     {{page.title}}
     </li>
@@ -65,7 +65,7 @@ like the following:
 
 <pre>
 &lt;ol&gt;
-  &#123;% for subdirectory in page.context.subdirectories %&#125;
+  &#123;% for subdirectory in page.subdirectories %&#125;
     &lt;li&gt;
     &#123;&#123;subdirectory.index.title&#125;&#125;
     &lt;/li&gt;

@@ -1,7 +1,7 @@
 <!-- podcasts in season -->
 
 <div class="mdl-grid">
-  {% for podcast in page.context.pages reversed %}
+  {% for podcast in page.siblingPages reversed %}
     {% if podcast.url != page.url%}
       {% capture text %}
         <b>{{podcast.title}}</b> {{podcast.description}}

@@ -35,25 +35,25 @@ translation_priority: 0
       Already have something in mind? Then jump right in!
     </p>
     <div class="mdl-grid mdl-typography--text-center wf-fundamentals-areas">
-      {% for pageInSection in page.context.subdirectories %}
-      {% if pageInSection.index.published != false %}
-      {% if pageInSection.id != 'getting-started' and pageInSection.id != 'primers' %}
-      {% capture icon %}svgs/{{pageInSection.id}}.svg{% endcapture %}
-        <div class="mdl-cell mdl-cell--4-col">
-          <div class="icon">
-            <a href="{{pageInSection.index.canonicalUrl }}">
-              {% include {{icon}} %}
-            </a>
-          </div>
-          <h3>
-            <a href="{{pageInSection.index.canonicalUrl }}">
-            {{pageInSection.index.title}}
-            </a>
-          </h3>
-          <p>{{pageInSection.index.description}}</p>
-        </div>
-      {% endif %}
-      {% endif %}
+      {% for pageInSection in page.subdirectories %}
+        {% if pageInSection.index.published != false %}
+          {% if pageInSection.id != 'getting-started' and pageInSection.id != 'primers' %}
+            {% capture icon %}svgs/{{pageInSection.id}}.svg{% endcapture %}
+            <div class="mdl-cell mdl-cell--4-col">
+              <div class="icon">
+                <a href="{{pageInSection.index.canonicalUrl }}">
+                  {% include {{icon}} %}
+                </a>
+              </div>
+              <h3>
+                <a href="{{pageInSection.index.canonicalUrl }}">
+                {{pageInSection.index.title}}
+                </a>
+              </h3>
+              <p>{{pageInSection.index.description}}</p>
+            </div>
+          {% endif %}
+        {% endif %}
       {% endfor %}
     </div>
   </div>

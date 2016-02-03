@@ -3,7 +3,7 @@ layout: shared/root
 description: "Web Landing"
 title: "Web @ Google Developers"
 ---
-{% for section in page.context.subdirectories %}
+{% for section in page.subdirectories %}
   {% if section.id == 'fundamentals' %}
     {% assign fundamentals = section %}
   {% elsif section.id == 'tools' %}

@@ -41,7 +41,7 @@ module Jekyll
       @contentFilepath = File.join(Dir.pwd, @contentSource)
       @initialPath = File.join(@contentFilepath, @primaryLang)
       @relativePath = ''
-      @tree = BranchNode.new(nil)
+      @tree = BranchNode.new(nil, 'root')
 
       self.performInitialChecks()
 
@@ -173,7 +173,7 @@ module Jekyll
       }
 
       directories.each{ |directoryName|
-        branchNode = BranchNode.new(currentBranch)
+        branchNode = BranchNode.new(currentBranch, directoryName)
         currentBranch.addBranchChildNode(branchNode)
 
         traverseFilePath(

@@ -10,7 +10,7 @@ order: 11
 
 {% comment %}
 
-{% for subdirectory in page.context.subdirectories %}
+{% for subdirectory in page.subdirectories %}
 <h4><a href="{{subdirectory.id}}">{{subdirectory.index.title}}</a></h4>
 <p>{{subdirectory.index.description}}</p>
 {% endfor %}

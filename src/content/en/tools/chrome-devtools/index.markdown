@@ -44,7 +44,7 @@ translation_priority: 1
   {% include page-structure/site-promo-banner.liquid %}
 
   <div class="wf-devtools-panels">
-    
+
     <h2 class="page-content mdl-typography--font-light">Discover the Panels</h2>
 
     <div class="mdl-tabs mdl-js-tabs page-content">
@@ -166,7 +166,7 @@ translation_priority: 1
     <div class="page-content">
       <h2 class="mdl-typography--font-light">Solutions for your Workflow</h2>
       <div class="mdl-grid">
-      {% for subdirectory in page.context.subdirectories %}
+      {% for subdirectory in page.subdirectories %}
         {% if subdirectory.subdirectories.size > 0 %}
         <div class="mdl-cell mdl-cell--4-col wf-tools-guide">
           <h3 class="wf-tools-guide__title"><a href="{{subdirectory.index.relativeUrl}}">{{subdirectory.index.title}}</a></h3>
@@ -244,7 +244,7 @@ translation_priority: 1
           </div>
 
     </div>
-    
+
   </div>
 
   <div class="wf-devtools-alternate wf-secondaryheading">
@@ -282,9 +282,7 @@ translation_priority: 1
       </div>
 
     </div>
-    
+
   </div>
 
 </div>
-
-

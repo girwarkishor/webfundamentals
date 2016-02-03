@@ -215,14 +215,7 @@ module Jekyll
         return @_nextPage
       end
 
-      branchNode = @leafNode.getParent()
-      nextLeaf = branchNode.getNextLeafNode(@leafNode)
-      if (nextLeaf.nil?)
-        @_nextPage = nil
-      else
-        @_nextPage = nextLeaf.getPageForLang(@langcode)
-      end
-
+      @_nextPage = TreeHelper.getPrevPage(@leafNode, @langcode)
       return @_nextPage
     end
 
@@ -232,15 +225,35 @@ module Jekyll
         return @_prevPage
       end
 
-      branchNode = @leafNode.getParent()
-      prevLeaf = branchNode.getPreviousLeafNode(@leafNode)
-      if (prevLeaf.nil?)
-        @_prevPage = nil
-      else
-        @_prevPage = prevLeaf.getPageForLang(@langcode)
+      @_prevPage = TreeHelper.getPrevPage(@leafNode, @langcode)
+      return @_prevPage
+    end
+
+    def siblingPages
+      if defined?(@_siblingPages)
+        return @_siblingPages
       end
 
-      return @_prevPage
+      @_siblingPages = TreeHelper.getSiblingPages(@leafNode.getParent(), @langcode)
+      return @_siblingPages
+    end
+
+    def subdirectories
+      if defined?(@_subdirectoires)
+        return @_subdirectoires
+      end
+
+      @_subdirectoires = TreeHelper.getSubdirectories(@leafNode.getParent(), @langcode)
+      return @_subdirectoires
+    end
+
+    def sectionId
+      if defined?(@_sectionId)
+        return @_sectionId
+      end
+
+      @_sectionId = TreeHelper.getBranchId(@leafNode.getParent())
+      return @_sectionId
     end
 
     def outOfDate
@@ -442,6 +455,9 @@ module Jekyll
   # Returns <Hash>
   def to_liquid(attrs = ATTRIBUTES_FOR_LIQUID)
     super(attrs +
+      %w[ sectionId ] +
+      %w[ siblingPages ] +
+      %w[ subdirectories ] +
       %w[ context ] + %w[ nextPage ] +
       %w[ previousPage ] + %w[ outOfDate ])
   end
