@@ -13,11 +13,13 @@
       <h3 class="wf-highlight-list__title">{{"topics" | localize_string}}</h3>
       <ol class="wf-highlight-list__list">
       {% for pageInSection in page.siblingPages %}
+        {% if pageInSection != page %}
         <li>
           <a href="{{pageInSection.relativeUrl }}">
             {{pageInSection.title}}
           </a>
         </li>
+        {% endif %}
       {% endfor %}
       </ol>
     </div>

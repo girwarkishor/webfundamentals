@@ -1,14 +1,12 @@
 require File.expand_path('../node.rb', __FILE__)
+require File.expand_path('../../helpers/tree.rb', __FILE__)
 
 class BranchNode < Node
-
-  attr_reader :indexLeafNode
 
   def initialize(parentNode, id)
     super(parentNode)
 
     @branchId = id
-    @indexLeafNode = nil
   end
 
   def addLeafChildNode(node)
@@ -18,11 +16,7 @@ class BranchNode < Node
       return
     end
 
-    if node.isIndexLeaf
-      @indexLeafNode = node
-    else
-      @leafChildNodes << node
-    end
+    @leafChildNodes << node
   end
 
   def addBranchChildNode(node)
@@ -39,10 +33,25 @@ class BranchNode < Node
 
   def sortNodes()
     @leafChildNodes = @leafChildNodes.sort do |leafNodeA, leafNodeB|
-      a_order = leafNodeA.primaryLanguagePage.data['order'] || leafNodeA.primaryLanguagePage.data['published_on'] || 0
-      b_order = leafNodeB.primaryLanguagePage.data['order'] || leafNodeB.primaryLanguagePage.data['published_on'] || 0
+      if leafNodeA.isIndexLeaf
+        a_order = -1
+      else
+        a_order = leafNodeA.primaryLanguagePage.data['order'] || leafNodeA.primaryLanguagePage.data['published_on'] || 0
+      end
 
-      a_order <=> b_order
+      if leafNodeB.isIndexLeaf
+        b_order = -1
+      else
+        b_order = leafNodeB.primaryLanguagePage.data['order'] || leafNodeB.primaryLanguagePage.data['published_on'] || 0
+      end
+
+      if a_order.is_a?(Integer) & b_order.is_a?(Integer)
+          a_order <=> b_order
+      elsif a_order.is_a?(Date) & b_order.is_a?(Date)
+          a_order <=> b_order
+      else
+        0 <=> 0
+      end
     end
 
     # This value is the default to make pages with no order to pushed to
@@ -50,8 +59,8 @@ class BranchNode < Node
     heavy_weight = 9999
 
     @branchChildNodes = @branchChildNodes.sort do |branchNodeA, branchNodeB|
-      indexLeafA = branchNodeA.indexLeafNode
-      indexLeafB = branchNodeB.indexLeafNode
+      indexLeafA = TreeHelper.getIndexLeafNode(branchNodeA)
+      indexLeafB = TreeHelper.getIndexLeafNode(branchNodeB)
 
       indexPageA = (indexLeafA.nil?) ? nil : indexLeafA.primaryLanguagePage
       indexPageB = (indexLeafB.nil?) ? nil : indexLeafB.primaryLanguagePage
@@ -77,15 +86,11 @@ class BranchNode < Node
   end
 
   def hasNodes()
-    return @leafChildNodes.size > 0 || @branchChildNodes.size > 0 || (!@indexLeafNode.nil?)
+    return @leafChildNodes.size > 0 || @branchChildNodes.size > 0
   end
 
   def getNextLeafNode(leafNode)
-    if leafNode == @indexLeafNode
-      leafIndex = -1
-    else
-      leafIndex = @leafChildNodes.index(leafNode)
-    end
+    leafIndex = @leafChildNodes.index(leafNode)
     if leafIndex.nil?
       return nil
     end
@@ -99,11 +104,7 @@ class BranchNode < Node
   end
 
   def getPreviousLeafNode(leafNode)
-    if leafNode == @indexLeafNode
-      leafIndex = -1
-    else
-      leafIndex = @leafChildNodes.index(leafNode)
-    end
+    leafIndex = @leafChildNodes.index(leafNode)
     if leafIndex.nil?
       return nil
     end
@@ -113,21 +114,10 @@ class BranchNode < Node
       return @leafChildNodes[prevLeafIndex]
     end
 
-    if (prevLeafIndex == -1 && (!@indexLeafNode.nil?))
-      return @indexLeafNode
-    end
-
     return nil
   end
 
   def getId()
     return @branchId
-  end
-
-  def getIndexPage(langcode)
-    if @indexLeafNode.nil?
-      return nil
-    end
-    return @indexLeafNode.getPageForLang(langcode);
   end
 end

@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-module Jekyll
   class TreeHelper
     def self.getSiblingPages(branchNode, langcode)
       siblingPages = []
@@ -39,9 +38,10 @@ module Jekyll
           next
         end
 
+        indexLeaf = self.getIndexLeafNode(branch);
         subdirectories << {
           "id" => branch.getId(),
-          "index" => branch.getIndexPage(langcode),
+          "index" => indexLeaf.nil? ? nil : indexLeaf.getPageForLang(langcode),
           "pages" => TreeHelper.getSiblingPages(branch, langcode),
           "subdirectories" => []
         }
@@ -72,5 +72,23 @@ module Jekyll
     def self.getBranchId(branchNode)
       return branchNode.getId()
     end
+
+    def self.getIndexLeafNode(branchNode)
+      allLeafNodes = branchNode.getLeafNodes()
+      if (allLeafNodes.size > 0 && allLeafNodes[0].isIndexLeaf)
+        return allLeafNodes[0]
+      end
+
+      return nil
+    end
+
+    def self.getRootToLeafPath(leafNode)
+      path = []
+      parentNode = leafNode.getParent()
+      while (!parentNode.nil?) do
+        path << parentNode
+        parentNode = parentNode.getParent()
+      end
+      return path.reverse
+    end
   end
-end

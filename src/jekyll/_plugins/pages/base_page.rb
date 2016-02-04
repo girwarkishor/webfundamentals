@@ -248,11 +248,11 @@ module Jekyll
       end
 
       if !(self.data.has_key?('updated_on'))
-        LogHelper.log(
-          "Warning",
-          "A translated page doesn\'t have an updated_on field. " +
-          File.join(@langcode, self.relative_path)
-        )
+        #LogHelper.log(
+        #  "Warning",
+        #  "A translated page doesn\'t have an updated_on field. " +
+        #  File.join(@langcode, self.relative_path)
+        #)
         return @_outOfDate
       end
 
@@ -267,6 +267,63 @@ module Jekyll
       @_outOfDate = (self.data['updated_on'] < primaryLangPage.data['updated_on'])
 
       return @_outOfDate
+    end
+
+    def generateNavigationList(rootToLeafBranches, currentLevel)
+      navigationPageList = []
+
+      currentBranchInPath = rootToLeafBranches[currentLevel]
+      nextBranchInPath = rootToLeafBranches[currentLevel + 1]
+
+      currentBranchInPath.getBranchNodes().each { |branchNode|
+        indexPage = nil
+        indexLeafNode = TreeHelper.getIndexLeafNode(branchNode)
+        if !(indexLeafNode.nil?)
+          navigationPageList << {
+            "page" => indexLeafNode.getPageForLang(@langcode),
+            "isSelected" => (branchNode == nextBranchInPath),
+            "navigationLevel" => currentLevel + 1
+          }
+        end
+
+        if branchNode == nextBranchInPath && (currentLevel + 1 < rootToLeafBranches.size)
+          # minus one since the root branch doesnt count
+          navigationPageList.concat(generateNavigationList(rootToLeafBranches, currentLevel + 1))
+        end
+      }
+
+      if nextBranchInPath.nil?
+        # We are at the end of the branch list, should we add other child pages?
+        leafNodes = currentBranchInPath.getLeafNodes()
+        leafNodes.each { |leafNode|
+          if leafNode.isIndexLeaf
+            next
+          end
+
+          navigationPageList << {
+            "page" => leafNode.getPageForLang(@langcode),
+            "isSelected" => (leafNode.getPageForLang(@langcode) == self),
+            "navigationLevel" => currentLevel + 2
+          }
+        }
+      end
+
+      return navigationPageList
+    end
+
+    def navigation
+      if defined?(@_navigation)
+        return @_navigation
+      end
+
+      rootBranchToLeaf = TreeHelper.getRootToLeafPath(@leafNode)
+      if (rootBranchToLeaf.size > 0)
+        @_navigation = generateNavigationList(rootBranchToLeaf, 0)
+      else
+        @_navigation = []
+      end
+
+      return @_navigation
     end
 
   # This is called when the main generator has finished creating pages
@@ -458,7 +515,9 @@ module Jekyll
       %w[ subdirectories ] +
       %w[ nextPage ] +
       %w[ previousPage ] +
-      %w[ outOfDate ])
+      %w[ outOfDate ] +
+      %w[ navigation ]
+    )
   end
   end
 end

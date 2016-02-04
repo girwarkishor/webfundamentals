@@ -1,3 +1,22 @@
+{% assign isOpen = false %}
+{% for singlePage in page.navigation %}
+  {% if singlePage.navigationLevel == 1 %}
+    {% if isOpen %}
+    </ul>
+    {% endif %}
+    <ul class="wf-main-nav__list wf-nav__list{% if singlePage.isSelected %} wf-nav__list--is-selected{% endif %} clear">
+    {% assign isOpen = true %}
+  {% endif %}
+
+  <li class="wf-main-nav__item wf-main-nav__item--level-{{singlePage.navigationLevel}}{% if singlePage.isSelected %} wf-main-nav__item--is-selected{% endif %}">
+    <a class="wf-main-nav__link{% if singlePage.currentPageInThisSection %} page-in-section{% endif %}" href="{{ singlePage.page.relativeUrl }}" title="Go to {{ singlePage.page.title | strip_html }}">
+      {{ singlePage.page.title }}
+    </a>
+  </li>
+{% endfor %}
+
+</ul>
+
 {% if page.contentnav %}
   {% include page-structure/nav-drawer-list.liquid toc=page.contentnav.toc %}
 {% endif %}

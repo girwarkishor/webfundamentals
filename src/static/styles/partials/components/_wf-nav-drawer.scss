@@ -4,7 +4,8 @@
 }
 
 .mdl-layout__drawer .mdl-navigation.wf-nav-drawer__container {
-  padding-top: 0;
+  padding-top: $nav-drawer-vertical-padding;
+  padding-bottom: $nav-drawer-vertical-padding * 2;
 }
 
 .wf-nav-drawer {
@@ -31,12 +32,68 @@
   padding: 0;
   margin: 0;
 
-  padding-top: $nav-drawer-vertical-padding;
-
   list-style: none;
 }
 
-.wf-main-nav__list-level-1 {
+.wf-nav__list--is-selected.wf-nav__list--is-selected {
+  margin-top: ($nav-drawer-vertical-padding * 2);
+  margin-bottom: ($nav-drawer-vertical-padding * 2);
+  padding-top: ($nav-drawer-vertical-padding * 2);
+  padding-bottom: ($nav-drawer-vertical-padding * 2);
+
+  border-top: 1px solid $grey-border-color;
+  border-bottom: 1px solid $grey-border-color;
+
+  &:first-child {
+    // -1 to account for the border
+    margin-top: -1px;
+  }
+}
+
+.wf-main-nav__item {
+  padding: $nav-drawer-vertical-padding $nav-drawer-horizontal-padding;
+  margin: 0;
+
+  a {
+    color: $text-color-primary;
+  }
+
+  &.wf-main-nav__item--is-selected {
+    font-weight: bold;
+  }
+}
+
+.wf-main-nav__item a:hover {
+  text-decoration: underline;
+}
+
+.wf-main-nav__item--level-1 {
+  font-weight: bold;
+}
+
+.wf-main-nav__item--level-1.wf-main-nav__item--is-selected {
+
+}
+
+.wf-main-nav__item--level-2 {
+  a {
+    color: $color-accent;
+  }
+}
+
+.wf-main-nav__item--level-3 {
+  padding-left: ($nav-drawer-horizontal-padding * 1.5);
+}
+
+.wf-main-nav__item--level-4 {
+  padding-left: ($nav-drawer-horizontal-padding * 2);
+}
+
+.wf-main-nav__item--level-5 {
+  padding-left: ($nav-drawer-horizontal-padding * 2.5);
+}
+
+/**.wf-main-nav__list-level-1 {
   display: inline-block;
   width: 100%;
 
@@ -50,36 +107,29 @@
 
 .wf-main-nav__list-level-3 {
   padding-top: ($nav-drawer-vertical-padding / 2);
-}
+}**/
 
-.wf-main-nav__item {
-  margin-bottom: 0;
-}
-
-.wf-main-nav__item a:hover {
-  text-decoration: underline;
-}
 
 // Default color for text (Black)
-.wf-main-nav__list-level-1 > .wf-main-nav__item > .wf-main-nav__link,
+/**.wf-main-nav__list-level-1 > .wf-main-nav__item > .wf-main-nav__link,
 .wf-main-nav__list-level-3 > .wf-main-nav__item .wf-main-nav__link {
   color: $text-color-primary;
-}
+}**/
 
 // Top level links get bold styling
-.wf-main-nav__list-level-1 > .wf-main-nav__item > .wf-main-nav__link {
+/**.wf-main-nav__list-level-1 > .wf-main-nav__item > .wf-main-nav__link {
   font-weight: bold;
-}
+}**/
 
 // First level gets a little extra padding
-.wf-main-nav__list-level-1 .wf-main-nav__item {
+/**.wf-main-nav__list-level-1 .wf-main-nav__item {
   padding: $nav-drawer-vertical-padding $nav-drawer-horizontal-padding;
-}
+}**/
 
 // Less padding on the lower levels
-.wf-main-nav__list-level-2 .wf-main-nav__item, .wf-main-nav__list-level-3 .wf-main-nav__item {
+/**.wf-main-nav__list-level-2 .wf-main-nav__item, .wf-main-nav__list-level-3 .wf-main-nav__item {
   padding: ($nav-drawer-vertical-padding / 2) $nav-drawer-vertical-padding;
-}
+}**/
 
 // Give none of the links underline styling
 .wf-main-nav__link {
@@ -89,28 +139,6 @@
     font-weight: bold;
   }
 }
-
-// Top / First item is the current section
-/**.wf-main-nav__list-level-1 > .wf-main-nav__item:first-child {
-  padding-bottom: ($nav-drawer-vertical-padding * 2);
-  margin-bottom: ($nav-drawer-vertical-padding * 2);
-  border-bottom: 1px solid $grey-border-color;
-}**/
-
-.wf-main-nav__item.wf-main-nav__selected {
-  padding-top: ($nav-drawer-vertical-padding * 2);
-  padding-bottom: ($nav-drawer-vertical-padding * 2);
-  margin-top: ($nav-drawer-vertical-padding * 2);
-  margin-bottom: ($nav-drawer-vertical-padding * 2);
-  border-top: 1px solid $grey-border-color;
-  border-bottom: 1px solid $grey-border-color;
-
-  &:first-child {
-    // -1 to account for the border
-    margin-top: -1px;
-  }
-}
-
 
 // Bottom links are for github and feedback
 .wf-navdrawer__bottom-link {

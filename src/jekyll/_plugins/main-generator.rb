@@ -91,6 +91,9 @@ module Jekyll
       if ENV.has_key?('WF_BUILD_SECTION')
         @initialPath = File.join(@initialPath, ENV['WF_BUILD_SECTION'])
         @relativePath = File.join(@relativePath, ENV['WF_BUILD_SECTION'])
+        sectionBranchNode = BranchNode.new(@tree, ENV['WF_BUILD_SECTION'])
+        @tree.addBranchChildNode(sectionBranchNode)
+        @tree = sectionBranchNode
       end
     end
 
@@ -120,39 +123,39 @@ module Jekyll
     end
 
     # Generate translations manifest.
-    def translations(site)
-      rootFilepath = File.join @contentSource, @primaryLang
-      filePatternPath = rootFilepath
-      buildRelativeDir = '.'
-      parentTree = nil
-      pagesTree = {"id" => "root", "pages" => [], "subdirectories" => []}
-      site.data['_context'] = pagesTree;
-
-      # If a section to build is defined
-      if ENV.has_key?('WF_BUILD_SECTION')
-        filePatternPath = File.join filePatternPath, ENV['WF_BUILD_SECTION']
-        buildRelativeDir = ENV['WF_BUILD_SECTION']
-
-        newDirectory = {
-          "id" => ENV['WF_BUILD_SECTION'],
-          "pages" => [],
-          "subdirectories" => []
-        }
-        pagesTree['subdirectories'] << newDirectory
-
-        parentTree = pagesTree
-        pagesTree = newDirectory
-      end
-
-      # Get files in directory
-      fileEntries = Dir.entries(filePatternPath)
-      site.data['primes'] = []
-      allPages = []
-
-      # handleFileEntries(allPages, parentTree, pagesTree, site, rootFilepath, buildRelativeDir, fileEntries)
-
-      allPages
-    end
+    #def translations(site)
+    #  rootFilepath = File.join @contentSource, @primaryLang
+    #  filePatternPath = rootFilepath
+    #  buildRelativeDir = '.'
+    #  parentTree = nil
+    #  pagesTree = {"id" => "root", "pages" => [], "subdirectories" => []}
+    #  site.data['_context'] = pagesTree;
+    #
+    #  # If a section to build is defined
+    #  if ENV.has_key?('WF_BUILD_SECTION')
+    #    filePatternPath = File.join filePatternPath, ENV['WF_BUILD_SECTION']
+    #    buildRelativeDir = ENV['WF_BUILD_SECTION']
+    #
+    #    newDirectory = {
+    #      "id" => ENV['WF_BUILD_SECTION'],
+    #      "pages" => [],
+    #      "subdirectories" => []
+    #    }
+    #    pagesTree['subdirectories'] << newDirectory
+    #
+    #    parentTree = pagesTree
+    #    pagesTree = newDirectory
+    #  end
+    #
+    #  # Get files in directory
+    #  fileEntries = Dir.entries(filePatternPath)
+    #  site.data['primes'] = []
+    #  allPages = []
+    #
+    #  # handleFileEntries(allPages, parentTree, pagesTree, site, rootFilepath, buildRelativeDir, fileEntries)
+    #
+    #  allPages
+    #end
 
     def traverseFilePath(filePatternPath, relativePath = '', currentBranch)
       fileEntries = Dir.entries(filePatternPath)
@@ -174,7 +177,6 @@ module Jekyll
 
       directories.each{ |directoryName|
         branchNode = BranchNode.new(currentBranch, directoryName)
-
         traverseFilePath(
           File.join(filePatternPath, directoryName),
           File.join(relativePath, directoryName),
@@ -182,8 +184,8 @@ module Jekyll
         )
 
         if branchNode.hasNodes()
-          branchNode.sortNodes()
           currentBranch.addBranchChildNode(branchNode)
+          branchNode.sortNodes()
         end
       }
     end
@@ -236,6 +238,8 @@ module Jekyll
       #    #end
       #  end
 
+      #@site.pages << page
+      #@site.pages.concat(translatedPages)
       @site.pages << page
       @site.pages.concat(translatedPages)
     end
