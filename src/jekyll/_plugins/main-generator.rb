@@ -183,7 +183,7 @@ module Jekyll
           branchNode
         )
 
-        if branchNode.hasNodes()
+        if branchNode.shouldBeAddedToTree()
           currentBranch.addBranchChildNode(branchNode)
           branchNode.sortNodes()
         end

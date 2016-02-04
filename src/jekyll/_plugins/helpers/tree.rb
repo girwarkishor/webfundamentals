@@ -34,7 +34,7 @@
           next
         end
 
-        if !branch.hasNodes()
+        if !branch.shouldBeAddedToTree()
           next
         end
 

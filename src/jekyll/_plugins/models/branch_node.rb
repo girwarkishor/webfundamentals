@@ -45,9 +45,7 @@ class BranchNode < Node
         b_order = leafNodeB.primaryLanguagePage.data['order'] || leafNodeB.primaryLanguagePage.data['published_on'] || 0
       end
 
-      if a_order.is_a?(Integer) & b_order.is_a?(Integer)
-          a_order <=> b_order
-      elsif a_order.is_a?(Date) & b_order.is_a?(Date)
+      if a_order.class == b_order.class
           a_order <=> b_order
       else
         0 <=> 0
@@ -65,19 +63,25 @@ class BranchNode < Node
       indexPageA = (indexLeafA.nil?) ? nil : indexLeafA.primaryLanguagePage
       indexPageB = (indexLeafB.nil?) ? nil : indexLeafB.primaryLanguagePage
 
-      a_order = 0
-      b_order = 0
+      a_order = heavy_weight
+      b_order = heavy_weight
       if !indexPageA.nil?
-        a_order = indexPageA.data['order'] || indexPageA.data['published_on'] || heavy_weight
+        a_order = indexPageA.data['order'] ||
+          indexPageA.data['published_on'] ||
+          branchNodeA.getId() ||
+          indexPageA.data['title'] ||
+          heavy_weight
       end
 
       if !indexPageB.nil?
-        b_order = indexPageB.data['order'] || indexPageB.data['published_on'] || heavy_weight
+        b_order = indexPageB.data['order'] ||
+          indexPageB.data['published_on'] ||
+          branchNodeB.getId() ||
+          indexPageB.data['title'] ||
+          heavy_weight
       end
 
-      if a_order.is_a?(Integer) & b_order.is_a?(Integer)
-          a_order <=> b_order
-      elsif a_order.is_a?(Date) & b_order.is_a?(Date)
+      if a_order.class == b_order.class
           a_order <=> b_order
       else
         0 <=> 0
@@ -85,8 +89,23 @@ class BranchNode < Node
     end
   end
 
-  def hasNodes()
-    return @leafChildNodes.size > 0 || @branchChildNodes.size > 0
+  def shouldBeAddedToTree()
+    if @leafChildNodes.size == 0 && @branchChildNodes.size == 0
+      return false
+    end
+
+    indexLeaf = TreeHelper.getIndexLeafNode(self)
+    if indexLeaf.nil?
+      return false
+    end
+
+    if indexLeaf.primaryLanguagePage.data.has_key?('published') &&
+      !(indexLeaf.primaryLanguagePage.data['published'])
+      # Not published so exclude from the tree
+      return false
+    end
+
+    return true
   end
 
   def getNextLeafNode(leafNode)
