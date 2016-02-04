@@ -89,8 +89,8 @@ module Jekyll
       end
 
       if ENV.has_key?('WF_BUILD_SECTION')
-        @initialPath = File.join(initialPath, ENV['WF_BUILD_SECTION'])
-        @relativePath = ENV['WF_BUILD_SECTION']
+        @initialPath = File.join(@initialPath, ENV['WF_BUILD_SECTION'])
+        @relativePath = File.join(@relativePath, ENV['WF_BUILD_SECTION'])
       end
     end
 
@@ -174,13 +174,17 @@ module Jekyll
 
       directories.each{ |directoryName|
         branchNode = BranchNode.new(currentBranch, directoryName)
-        currentBranch.addBranchChildNode(branchNode)
 
         traverseFilePath(
           File.join(filePatternPath, directoryName),
           File.join(relativePath, directoryName),
           branchNode
         )
+
+        if branchNode.hasNodes()
+          branchNode.sortNodes()
+          currentBranch.addBranchChildNode(branchNode)
+        end
       }
     end
 

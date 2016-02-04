@@ -2,7 +2,7 @@ require File.expand_path('../node.rb', __FILE__)
 
 class LeafNode < Node
 
-  attr_reader :isIndexLeaf
+  attr_reader :isIndexLeaf, :primaryLanguagePage
 
   def initialize(parentNode)
     super(parentNode)
