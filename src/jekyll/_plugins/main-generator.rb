@@ -47,13 +47,6 @@ module Jekyll
 
       self.prepareInitialVariables(site)
 
-      # Make the language code and matching language name available
-      # to all of the site
-      # site.data["primes"] = translations(site)
-
-
-
-
       traverseFilePath(@initialPath, @relativePath, @tree)
     end
 
@@ -122,41 +115,6 @@ module Jekyll
       }
     end
 
-    # Generate translations manifest.
-    #def translations(site)
-    #  rootFilepath = File.join @contentSource, @primaryLang
-    #  filePatternPath = rootFilepath
-    #  buildRelativeDir = '.'
-    #  parentTree = nil
-    #  pagesTree = {"id" => "root", "pages" => [], "subdirectories" => []}
-    #  site.data['_context'] = pagesTree;
-    #
-    #  # If a section to build is defined
-    #  if ENV.has_key?('WF_BUILD_SECTION')
-    #    filePatternPath = File.join filePatternPath, ENV['WF_BUILD_SECTION']
-    #    buildRelativeDir = ENV['WF_BUILD_SECTION']
-    #
-    #    newDirectory = {
-    #      "id" => ENV['WF_BUILD_SECTION'],
-    #      "pages" => [],
-    #      "subdirectories" => []
-    #    }
-    #    pagesTree['subdirectories'] << newDirectory
-    #
-    #    parentTree = pagesTree
-    #    pagesTree = newDirectory
-    #  end
-    #
-    #  # Get files in directory
-    #  fileEntries = Dir.entries(filePatternPath)
-    #  site.data['primes'] = []
-    #  allPages = []
-    #
-    #  # handleFileEntries(allPages, parentTree, pagesTree, site, rootFilepath, buildRelativeDir, fileEntries)
-    #
-    #  allPages
-    #end
-
     def traverseFilePath(filePatternPath, relativePath = '', currentBranch)
       fileEntries = Dir.entries(filePatternPath)
 
@@ -221,25 +179,7 @@ module Jekyll
 
       leafNode.setPages(page, translatedPages)
       currentBranch.addLeafChildNode(leafNode)
-      #  page.data['_context'] = pagesTrees
 
-      #  translated_pages = {'en' => page}
-      #  page.data["translations"] = translated_pages
-
-      #  # If published is false, don't include it in the pagesTree
-      #  if (@markdownExtensions.include? File.extname(fileEntry))
-      #    # If it's a markdown file, add to the page tree
-      #    #if !(page['published'] == false)
-      #      if page.name.start_with? ('index')
-      #        pagesTrees['index'] = page
-      #      else
-      #        pagesTrees['pages'] << page
-      #      end
-      #    #end
-      #  end
-
-      #@site.pages << page
-      #@site.pages.concat(translatedPages)
       @site.pages << page
       @site.pages.concat(translatedPages)
     end
@@ -257,74 +197,17 @@ module Jekyll
 
       translatedPages = []
       translatedLangcodes.each do |langcode|
-        # translationFilePath = File.join @contentSource, langcode, relativePath
-
         translatedPage = createPage(
           @site,
           relativePath,
           fileName,
           langcode,
           leafNode)
-
-        # translationPage.data.merge!('is_localized' => true, 'is_localization' => true)
-
-        # translationPage.data['_context'] = pagesTrees
-        # translationPage.data['translations'] = translated_pages
-
-        # translated_pages[languageId] = translationPage
-        # site.pages << translationPage
         translatedPages << translatedPage
       end
 
       return translatedPages
     end
-
-    #def handleFileEntries(allPages, treeParent, pagesTrees, site, rootPath, relativePath, fileEntries)
-    #  fileEntries.each { |fileEntry|
-    #    if File.directory?(File.join(rootPath, relativePath, fileEntry))
-    #      # We are dealing with a directory
-    #      if fileEntry =~ /^_/
-    #        next
-    #      end
-    #      if fileEntry =~ /\/_(code|assets)/
-    #        next
-    #      end
-    #      if fileEntry == "." || fileEntry == ".."
-    #        next
-    #      end
-    #      newDirectory = {
-    #        "id" => fileEntry,
-    #        "pages" => [],
-    #        "subdirectories" => []
-    #      }
-    #      pagesTrees['subdirectories'] << newDirectory
-    #
-    #      if relativePath == '.'
-    #        nextRelativePath = fileEntry
-    #      else
-    #        nextRelativePath= File.join(relativePath, fileEntry)
-    #      end
-    #      handleFileEntries(
-    #        allPages,
-    #        pagesTrees,
-    #        newDirectory,
-    #        site,
-    #        rootPath,
-    #        nextRelativePath,
-    #        Dir.entries( File.join(rootPath, nextRelativePath) )
-    #        )
-    #    else
-    #
-    #    end
-    #  }
-    #
-    #  if pagesTrees['pages'].length == 0 &&
-    #    pagesTrees['subdirectories'].length == 0 &&
-    #    pagesTrees['index'].nil?
-    #    treeParent['subdirectories'].delete(pagesTrees)
-    #  end
-    #
-    #end
 
     # Creates a new Page which must be a class that inherits from WFPage
     def createPage(site, relative_dir, file_name, langcode, leafNode)
@@ -361,16 +244,5 @@ module Jekyll
 
       return page
     end
-
-    # Creates a new Asset
-    #def createAsset(relative_dir, file_name)
-    #  # Don't process underscore files.
-    #  if relative_dir =~ /^_/
-    #    LogHelper.throwError("CREATE ASSET WITH BAD DIR")
-    #    return nil
-    #  end
-    #  @staticFiles << LanguageAsset.new(relative_dir, file_name, 'en')
-    #end
   end
-
 end
