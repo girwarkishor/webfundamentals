@@ -355,3 +355,13 @@ Implementing web sites should change their code as follows:
 **Old**: `track.item(i)`
 
 **New**: `track[i]`
+
+## Prefixed Version of Mouvement Events Removed
+
+**TL;DR**: The prefixed events `MouseEvent.webkitMovementX` and `MouseEvent.webkitMovementY` have been removed.
+
+[Intent to Remove](https://groups.google.com/a/chromium.org/d/topic/blink-dev/tN8fWRtG0MI/discussion)
+[Chromestatus Tracker]()
+[CRBug Issue]()
+
+The unprefixed events `MouseEvent.MovementX` and `MouseEvent.MovementY` have been [supported in Chrome](http://caniuse.com/#feat=pointerlock) since version 37. 
