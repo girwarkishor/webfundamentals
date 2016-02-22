@@ -344,13 +344,15 @@ wrapper library like
 
 ## Named Item Getters on TextTrackList and TextTrackCueList Removed
 
-**TL;DR**: To compy with the [HTML specification](https://html.spec.whatwg.org) `TextTrackList` and `TextTrackCueList` should have anonymous indexed getters, not an `item()` method.
+**TL;DR**: To comply with the [HTML specification](https://html.spec.whatwg.org) `TextTrackList` and `TextTrackCueList` should have anonymous indexed getters, not an `item()` method.
 
 [Intent to Remove](https://groups.google.com/a/chromium.org/d/topic/blink-dev/fuNdIeOnmTo/discussion)
 [Chromestatus Tracker](https://www.chromestatus.com/features/5208882079072256)
 [CRBug Issue](https://bugs.chromium.org/p/chromium/issues/detail?id=535475)
 
-Implementing web sites should change their code as follows:
+HTML5's `<track>` element provides a standards-based way to provide subtitles, captions, screen reader descriptions and chapter to embedded video and audio. Since multiple `<track>` elements may be nested inside a single `<video>` or `<audio>` element, a way is needed to programatically access all of the available `<track>` elements inside a specific parent. 
+
+To compy with the specification, Chrome is changing the way members of those lists are acessed from a getter named `item()` to an index. Implementing web sites should change their code as follows:
 
 **Old**: `track.item(i)`
 
@@ -361,7 +363,9 @@ Implementing web sites should change their code as follows:
 **TL;DR**: The prefixed events `MouseEvent.webkitMovementX` and `MouseEvent.webkitMovementY` have been removed.
 
 [Intent to Remove](https://groups.google.com/a/chromium.org/d/topic/blink-dev/tN8fWRtG0MI/discussion)
-[Chromestatus Tracker]()
-[CRBug Issue]()
+[Chromestatus Tracker](https://www.chromestatus.com/features/5676647286046720)
+[CRBug Issue](https://bugs.chromium.org/p/chromium/issues/detail?id=398457)
+
+The movement properties of the `MouseEvent` are read-only properties that return the distance moved between the current and previous firing of the event. These properties are part of the [Pointer Lock API](https://developer.mozilla.org/en-US/docs/Web/API/Pointer_Lock_API) (previously called the Mouse Lock API), which allows you to track mouse movements over time. This API allows use cases where an object needs to be manipulated with the mouse while leaving the buttons available for other actions. 
 
 The unprefixed events `MouseEvent.MovementX` and `MouseEvent.MovementY` have been [supported in Chrome](http://caniuse.com/#feat=pointerlock) since version 37. 
