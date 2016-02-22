@@ -341,3 +341,17 @@ are now seeking a transition path, consider using a polyfill such as
 [MaxArt2501/object-observe](https://github.com/MaxArt2501/object-observe) or a
 wrapper library like
 [polymer/observe-js](https://github.com/polymer/observe-js).
+
+## Named Item Getters on TextTrackList and TextTrackCueList Removed
+
+**TL;DR**: To compy with the [HTML specification](https://html.spec.whatwg.org) `TextTrackList` and `TextTrackCueList` should have anonymous indexed getters, not an `item()` method.
+
+[Intent to Remove](https://groups.google.com/a/chromium.org/d/topic/blink-dev/fuNdIeOnmTo/discussion)
+[Chromestatus Tracker](https://www.chromestatus.com/features/5208882079072256)
+[CRBug Issue](https://bugs.chromium.org/p/chromium/issues/detail?id=535475)
+
+Implementing web sites should change their code as follows:
+
+**Old**: `track.item(i)`
+
+**New**: `track[i]`
