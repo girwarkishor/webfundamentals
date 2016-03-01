@@ -360,7 +360,7 @@ To compy with the specification, Chrome is changing the way members of those lis
 
 ## Prefixed Version of Movement Events Removed
 
-**TL;DR**: The prefixed events `MouseEvent.webkitMovementX` and `MouseEvent.webkitMovementY` have been removed.
+**TL;DR**: The prefixed events `MouseEvent.webkitMovementX` and `MouseEvent.webkitMovementY`, deprecated in Chrome 45, have been removed.
 
 [Intent to Remove](https://groups.google.com/a/chromium.org/d/topic/blink-dev/tN8fWRtG0MI/discussion)
 [Chromestatus Tracker](https://www.chromestatus.com/features/5676647286046720)
