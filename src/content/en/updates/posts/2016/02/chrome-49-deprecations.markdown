@@ -358,7 +358,7 @@ To compy with the specification, Chrome is changing the way members of those lis
 
 **New**: `track[i]`
 
-## Prefixed Version of Mouvement Events Removed
+## Prefixed Version of Movement Events Removed
 
 **TL;DR**: The prefixed events `MouseEvent.webkitMovementX` and `MouseEvent.webkitMovementY` have been removed.
 
@@ -368,4 +368,4 @@ To compy with the specification, Chrome is changing the way members of those lis
 
 The movement properties of the `MouseEvent` are read-only properties that return the distance moved between the current and previous firing of the event. These properties are part of the [Pointer Lock API](https://developer.mozilla.org/en-US/docs/Web/API/Pointer_Lock_API) (previously called the Mouse Lock API), which allows you to track mouse movements over time. This API allows use cases where an object needs to be manipulated with the mouse while leaving the buttons available for other actions. 
 
-The unprefixed events `MouseEvent.MovementX` and `MouseEvent.MovementY` have been [supported in Chrome](http://caniuse.com/#feat=pointerlock) since version 37. 
+The unprefixed events `MouseEvent.movementX` and `MouseEvent.movementY` have been [supported in Chrome](http://caniuse.com/#feat=pointerlock) since version 37. 
