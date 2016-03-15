@@ -7,7 +7,6 @@ authors:
   - pbakaus
 tags:
   - devtools
-  - digest
   - update
   - chrome49
 description: "Learn all about the revamped “Inspect Devices” UI, toggle classes easily in the now-fixed style panel and watch the pilot of DevTools Tonight."

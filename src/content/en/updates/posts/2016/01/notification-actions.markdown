@@ -8,6 +8,7 @@ authors:
   - paulkinlan
 tags:
   - notifications
+  - push
 featured_image: /web/updates/images/2016/01/notification-actions/notification.png
 ---
 

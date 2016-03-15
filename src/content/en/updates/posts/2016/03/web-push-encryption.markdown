@@ -8,6 +8,7 @@ authors:
   - mscales
 tags:
   - push
+  - notifications
   - encryption
   - chrome50
 ---

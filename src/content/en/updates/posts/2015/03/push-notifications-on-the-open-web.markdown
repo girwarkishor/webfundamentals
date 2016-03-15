@@ -7,10 +7,9 @@ updated_on: 2015-10-16
 authors:
   - mattgaunt
 tags:
-  - news
-  - pushmessaging
+  - push
   - notifications
-  - serviceworker
+  - service-worker
 notes:
   tutorial:
     - "This blog post is getting a bit old. If you are looking to learn more

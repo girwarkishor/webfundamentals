@@ -8,7 +8,7 @@ authors:
   - jeffposnick
 tags:
   - news
-  - serviceworker
+  - service-worker
   - offline
   - cache
   - performance

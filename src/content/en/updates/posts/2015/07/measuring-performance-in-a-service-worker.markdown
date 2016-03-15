@@ -9,7 +9,7 @@ authors:
 tags:
   - news
   - performance
-  - serviceworker
+  - service-worker
 ---
 
 Other than Jake Archibald worrying about his Developer skills rotting and 

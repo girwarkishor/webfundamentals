@@ -8,6 +8,7 @@ authors:
   - paulkinlan
 tags:
   - notifications
+  - push
   - chrome50
 ---
 

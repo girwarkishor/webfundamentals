@@ -9,8 +9,7 @@ authors:
 tags:
   - news
   - elementanimate
-  - webanimations
-  - animations
+  - animation
 ---
 Animation on the web was once the province of JavaScript, but as the world moved to mobile, animations moved to CSS for the declarative syntax and the optimizations browsers were able to make with it. With 60fps on mobile always your goal, it makes sense to never step outside of what browsers know how to efficiently display.
 

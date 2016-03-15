@@ -7,7 +7,6 @@ authors:
   - pbakaus
 tags:
   - devtools
-  - digest
   - update
 description: "Re-order DevTools tabs which ever way suits you best and see exactly where framework events were bound."
 featured_image: /web/updates/images/2015-08-24-devtools-digest/featured.jpg

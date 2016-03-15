@@ -7,7 +7,6 @@ authors:
   - pbakaus
 tags:
   - devtools
-  - digest
   - update
 description: "Discover the new film strip functionality and more in this first of many DevTools Digest updates."
 featured_image: /web/updates/images/2015-07-23-devtools-bi-weekly-film-strip-and-a-new-home-for-throttling/featured.png

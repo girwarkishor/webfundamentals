@@ -7,7 +7,6 @@ authors:
   - pbakaus
 tags:
   - devtools
-  - digest
   - update
 description: "Use the DOM panel’s new context menu to efficiently edit nodes. Debug services workers directly via the Resources panel. Choose from all of the Material Design shades in the colorpicker. Blackbox JS libraries more easily."
 featured_image: /web/updates/images/2015/10/devtools-blackboxing.png

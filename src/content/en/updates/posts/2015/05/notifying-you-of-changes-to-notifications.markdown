@@ -10,7 +10,6 @@ tags:
   - news
   - push
   - notifications
-  - data
 ---
 
 Firstly, I apologise for that awful title, but I couldn't not.

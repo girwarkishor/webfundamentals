@@ -8,8 +8,7 @@ authors:
   - samthorogood
 tags:
   - news
-  - animations
-  - webanimations
+  - animation
 ---
 
 Native support for Web Animations first shipped [in Chrome 36](http://updates.html5rocks.com/2014/05/Web-Animations---element-animate-is-now-in-Chrome-36), and was updated with playback control [in Chrome 39](http://updates.html5rocks.com/2014/12/web-animation-playback). The `Element.animate()` method can be used to trigger imperative animations directly from JavaScript, and its returned object can be leveraged to control the playback of these animations. These methods are detailed in the current draft of the [Web Animations W3C spec](https://w3c.github.io/web-animations/).

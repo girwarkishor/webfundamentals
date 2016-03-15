@@ -8,8 +8,6 @@ authors:
   - samthorogood
 tags:
   - animation
-  - animations
-  - web-animation
 featured_image: /web/updates/images/2015/10/web-animations-resources.png
 ---
 
