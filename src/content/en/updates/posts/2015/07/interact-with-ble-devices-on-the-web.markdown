@@ -21,6 +21,15 @@ lightbulbs, [turtles](https://www.youtube.com/watch?v=1LV1Fk5ZXwA) and [flying
 grumpy cats](https://www.youtube.com/watch?v=tRMcMDIyIGQ) could interact
 directly with a website.
 
+Until now, the ability to interact with bluetooth devices has been possible
+only for native apps. The Web Bluetooth API aims to change this and brings it
+to web browsers as well. With open source initiatives like the [Physical
+Web](https://google.github.io/physical-web/), people will be able to walk up to
+any smart device - a vending machine, a toy, a bus stop, a rental car - and not
+have to download an app first. Everything will be just a tap away. Check out
+this [drone controlled from a web app](https://www.youtube.com/watch?v=yILD_ZdXJW4) 
+video to get a sense of how that would work.
+
 ## Before we start
 
 This article assumes you have some basic knowledge of how Bluetooth Low
