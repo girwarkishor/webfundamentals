@@ -48,6 +48,8 @@ module Jekyll
       self.prepareInitialVariables(site)
 
       traverseFilePath(@initialPath, @relativePath, @tree)
+
+      site.data['tipOfTree'] = @tree
     end
 
     def performInitialChecks()
@@ -77,8 +79,12 @@ module Jekyll
       site.data["contributors"] = self.getContributors(site)
       site.data["language_names"] = YAML.load_file(site.config['WFLangNames'])
 
+      # curr_lang is used to change to single build languages
       if ENV.has_key?('WF_BUILD_LANG')
         @langsAvailable = [ENV['WF_BUILD_LANG']]
+        site.data["curr_lang"] = ENV['WF_BUILD_LANG']
+      else
+        site.data["curr_lang"] = @primaryLang
       end
 
       if ENV.has_key?('WF_BUILD_SECTION')
@@ -177,7 +183,17 @@ module Jekyll
       page = createPage(@site, relativePath, fileName, langcode, leafNode)
       translatedPages = getTranslatedPages(relativePath, fileName, leafNode)
 
+      # Copy over the keys from the main page to the translated page
+      translatedPages.each { |translatedPage|
+        page.data.each { |key, value|
+          if translatedPage.data[key].nil?
+            translatedPage.data[key] = value
+          end
+        }
+      }
+
       leafNode.setPages(page, translatedPages)
+
       currentBranch.addLeafChildNode(leafNode)
 
       @site.pages << page

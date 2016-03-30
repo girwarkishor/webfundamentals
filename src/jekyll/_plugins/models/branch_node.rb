@@ -16,7 +16,11 @@ class BranchNode < Node
       return
     end
 
-    @leafChildNodes << node
+    if node.isIndexLeaf
+      @leafChildNodes.unshift(node)
+    else
+      @leafChildNodes << node
+    end
   end
 
   def addBranchChildNode(node)
@@ -95,11 +99,8 @@ class BranchNode < Node
     end
 
     indexLeaf = TreeHelper.getIndexLeafNode(self)
-    if indexLeaf.nil?
-      return false
-    end
-
-    if indexLeaf.primaryLanguagePage.data.has_key?('published') &&
+    if (!indexLeaf.nil?) &&
+      indexLeaf.primaryLanguagePage.data.has_key?('published') &&
       !(indexLeaf.primaryLanguagePage.data['published'])
       # Not published so exclude from the tree
       return false

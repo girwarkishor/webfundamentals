@@ -52,3 +52,6 @@ DEPENDENCIES
   kramdown
   pygments.rb
   sanitize
+
+BUNDLED WITH
+   1.10.3

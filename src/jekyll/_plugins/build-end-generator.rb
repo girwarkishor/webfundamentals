@@ -46,15 +46,15 @@ module Jekyll
         # chance to do any final work needed
         page.onBuildComplete()
 
-        page.data['translations'].each { |langCode, translationPage|
-          page.data.each { |key, value|
-            if translationPage.data[key].nil?
-              translationPage.data[key] = value
-            end
-          }
-
-          translationPage.onBuildComplete()
-        }
+        #page.data['translations'].each { |langCode, translationPage|
+        #  page.data.each { |key, value|
+        #    if translationPage.data[key].nil?
+        #      translationPage.data[key] = value
+        #    end
+        #  }
+        #
+        #  translationPage.onBuildComplete()
+        #}
       }
 
 

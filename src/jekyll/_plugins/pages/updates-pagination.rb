@@ -18,7 +18,7 @@ module Jekyll
 
   class UpdatesPaginationPage < UpdatePage
 
-    def initialize(site, path, langcode, pages, paginationIndex, totalPaginationPages, title = nil, leafNode)
+    def initialize(site, path, langcode, pages, paginationIndex, totalPaginationPages, leafNode, title = nil)
       if path.nil?
         dir = 'updates'
         title = 'Updates'
@@ -69,7 +69,8 @@ module Jekyll
       #end
 
       # We do this so that pages content includes the supploed layout file
-      self.read_yaml(File.join(site.source, '_layouts'), 'updates/index.liquid')
+      puts 'Going to try and read: ' + File.join(site.source, 'jekyll', '_layouts', 'updates')
+      self.read_yaml(File.join('jekyll', '_layouts', 'updates'), 'index.liquid')
     end
 
   end

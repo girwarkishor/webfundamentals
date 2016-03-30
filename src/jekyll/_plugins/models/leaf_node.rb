@@ -2,7 +2,7 @@ require File.expand_path('../node.rb', __FILE__)
 
 class LeafNode < Node
 
-  attr_reader :isIndexLeaf, :primaryLanguagePage
+  attr_reader :isIndexLeaf, :primaryLanguagePage, :translatedPages
 
   def initialize(parentNode)
     super(parentNode)
@@ -15,7 +15,6 @@ class LeafNode < Node
   def setPages(primaryLanguagePage, translatedPages)
     @primaryLanguagePage = primaryLanguagePage
     @translatedPages = translatedPages
-
     @isIndexLeaf = primaryLanguagePage.name.start_with? ('index')
   end
 

@@ -2,28 +2,18 @@
   <div class="wf-footer__section-container">
     <div class="wf-footer-section">
       <ul class="wf-footer__list wf-footer__list--primary">
-      {% for contentnavTocItem in page.contentnav.toc %}
+      {% for contentnavTocItem in page.navigation %}
+        {% if contentnavTocItem.navigationLevel != 1 %}
+          {% continue %}
+        {% endif %}
+
         {% if contentnavTocItem.title == 'Resources' %}
           {% continue %}
         {% endif %}
 
-        {% if contentnavTocItem.home %}
-        <a href="{{ contentnavTocItem.path }}" title="Go to {{ contentnavTocItem.strippedTitle }}">
-          <strong>{{ contentnavTocItem.title }}</strong>
-        </a>
-        {% else %}
-        <a href="{{ contentnavTocItem.path }}" title="Go to {{ contentnavTocItem.strippedTitle }}">
-          {{ contentnavTocItem.title }}
-        </a>
-        {% endif %}
-
-        {% if site.spotlights == true or checkTitle != 'spotlights' %}
-        <li class="sitemap__item sitemap__item--{{ section.title | downcase | replace:' ','-' }} {% if section.home %} sitemap__item--home {% endif %}{% unless section.home %}{% if page.relativeUrl contains section.path %} sitemap__item--current{% endif %}{% endunless %}{% if section.home and page.relativeUrl == '/index.html' %} sitemap__item--current{% endif %} {% if section.hasSubNav %} sitemap__item--has-child{% endif %}">
-          <a class="sitemap-list__link sitemap-list__link--parent" href="{% if section.external != true %}{{site.WFBaseUrl}}{% endif %}{{ section.path }}?hl={{page.langcode}}" title="Go to {{ stripTitle }}">
-            {{ section.title }}
-          </a>
-        </li>
-        {% endif %}
+        <li><a href="{{ contentnavTocItem.page.relativeUrl }}" title="Go to {{ contentnavTocItem.page.strippedTitle }}">
+          {{ contentnavTocItem.page.title }}
+        </a></li>
       {% endfor %}
       <li><a href="{{site.WFBaseUrl}}/resources/">Resources</a></li>
       </ul>

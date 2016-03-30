@@ -22,31 +22,38 @@ module Jekyll
     priority :low
 
     def generate(site)
-      return
-      
       @contentSource = site.config['WFContentSource']
       @numberOfResultsPerPage = 10
       @tags = []
       @tagPageMapping = {}
-      if @contentSource.nil?
-        Jekyll.logger.info "WFContentSource is not defined - no language " +
-          "pages to generate"
-        return
-      end
 
-      updateSection = nil
-      site.data['_context']['subdirectories'].each { |subdirectory|
-        if subdirectory['id'] == 'updates'
-          updateSection = subdirectory
+      updateBranchNode = nil
+      site.data['tipOfTree'].getBranchNodes().each { |branchNode|
+        if (branchNode.getId() == 'updates')
+          updateBranchNode = branchNode;
         end
       }
 
       # Skip out if update section is not there
-      if updateSection.nil?
+      if updateBranchNode.nil?
+        puts "Skipping updates - Can't find updates branch"
         return;
       end
 
-      createTagsForUpdates(getPages(site, ['updates']))
+      updatePostsBranchNode = nil
+      updateBranchNode.getBranchNodes().each { |branch|
+        if branch.getId() == 'posts'
+          updatePostsBranchNode = branch
+        end
+      }
+
+      # Skip out if update section is not there
+      if updatePostsBranchNode.nil?
+        puts "Skipping updates - Can't find updates/post branch"
+        return;
+      end
+
+      #createTagsForUpdates(getPages(site, ['updates']))
 
       # Generate updates for subdirectories in the updates folder,
       # will skipp the tags folder automatically.
@@ -56,38 +63,56 @@ module Jekyll
         'devtools' => 'DevTools'
       }
 
-      desiredTagPromotions.each { |tagId, tagTitle|
-        pages = @tagPageMapping[tagId]
-        if pages.count == 0
-          msg = 'The promoted tag (' + tag['tagId'] + ') doesn\'t have any pages!'
-          throw new Error("Promoting Tag", msg);
-        end
-
-        newSubsection = {'id' => tagId, "pages" => [], "subdirectories" => []}
-        updateSection['subdirectories'] << newSubsection
-      }
+      #desiredTagPromotions.each { |tagId, tagTitle|
+      #  pages = @tagPageMapping[tagId]
+      #  if pages.count == 0
+      #    msg = 'The promoted tag (' + tag['tagId'] + ') doesn\'t have any pages!'
+      #    throw new Error("Promoting Tag", msg);
+      #  end
+      #
+      #  newSubsection = {'id' => tagId, "pages" => [], "subdirectories" => []}
+      #  updateSection['subdirectories'] << newSubsection
+      #}
 
       # Generate the updates for root
-      pages = getPages(site, ['updates'])
-      generatePaginationPages(site, nil, updateSection, pages, nil)
+      # pages = getPages(site, ['updates'])
+      # generatePaginationPages(site, nil, updateSection, pages, nil)
+      updatePosts = []
+      updatePostsBranchNode.getBranchNodes().each { |yearBranch|
+        yearBranch.getBranchNodes().each { |monthBranch|
+          monthBranch.getLeafNodes().each { |leafNode|
+            primaryLangPage = leafNode.primaryLanguagePage
+            if (!primaryLangPage.data.has_key?('published')) || primaryLangPage.data['published'] == true
+              updatePosts << primaryLangPage
+            end
+          }
+        }
+      }
+
+      generatePaginationPages(site, nil, updateBranchNode, updatePosts, nil)
+
+
+
+
+
+
       # Root level feeds for updates is generated in build-end-generator
 
       # generate tag pages
-      tagsSection = {'id' => 'tags', "pages" => [], "subdirectories" => []}
-      updateSection['subdirectories'] << tagsSection
-      generateTagPages(site, nil, tagsSection, pages)
+      #tagsSection = {'id' => 'tags', "pages" => [], "subdirectories" => []}
+      #updateSection['subdirectories'] << tagsSection
+      #generateTagPages(site, nil, tagsSection, pages)
 
-      updateSection['subdirectories'].each { |subdirectory|
-        if ((subdirectory['id'] == 'tags') or  (subdirectory['id'] == 'posts'))
-          next;
-        end
-
-        pages = @tagPageMapping[subdirectory['id']]
-        path = subdirectory['id']
-        generatePaginationPages(site, path, subdirectory, pages, desiredTagPromotions[subdirectory['id']])
-        generateSubdirectoryFeed(site, subdirectory)
-      }
-
+      #updateSection['subdirectories'].each { |subdirectory|
+      #  if ((subdirectory['id'] == 'tags') or  (subdirectory['id'] == 'posts'))
+      #    next;
+      #  end
+      #
+      #  pages = @tagPageMapping[subdirectory['id']]
+      #  path = subdirectory['id']
+      #  generatePaginationPages(site, path, subdirectory, pages, desiredTagPromotions[subdirectory['id']])
+      #  generateSubdirectoryFeed(site, subdirectory)
+      #}
     end
 
     def createTagsForUpdates(pages)
@@ -132,14 +157,12 @@ module Jekyll
       site.pages << UpdatesFeedPage.new(site, path, site.data['curr_lang'], pages, WFFeedPage.FEED_TYPE_ATOM)
     end
 
-    def generatePaginationPages(site, path, updateSection, pages, title)
+    def generatePaginationPages(site, path, updatesBranch, pages, title)
       # Filter out pages with dates only
       pages = pages.map { |page|
-        requiredYamlFields = ['published_on']
+        puts page.data.keys
         if (requiredYamlFields - page.data.keys).empty? == false
-          puts "Found an update page without a date - this is surely wrong?"
-          throw new PluginError(PLUGIN_NAME, 'Update page found without a date field. ' +
-            page.name);
+          LogHelper.throwError("Update page found without a 'published_on' field. " + page.dir + page.name)
           next
         end
 
@@ -157,15 +180,14 @@ module Jekyll
 
         pagesToInclude = pages[startPageIndex..endPageIndex]
 
-        updatePage = UpdatesPaginationPage.new(site, path, site.data['curr_lang'], pagesToInclude, pageIndex, numberOfPages, title)
-        updatePage.data['_context'] = updateSection
+        leafNode = LeafNode.new(updatesBranch)
+
+        updatePage = UpdatesPaginationPage.new(site, path, site.data['curr_lang'], pagesToInclude, pageIndex, numberOfPages, leafNode, title)
+
+        leafNode.setPages(updatePage, [])
+        updatesBranch.addLeafChildNode(leafNode)
 
         site.pages << updatePage
-        if pageIndex == 0
-          updateSection['index'] = updatePage
-        else
-          updateSection['pages'] << updatePage
-        end
       }
     end
 

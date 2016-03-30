@@ -23,7 +23,6 @@ module Jekyll
     DEFAULT_HEAD_DESCRIPTION = 'Google Developers - Web Fundamentals';
 
     alias superdest destination
-    #alias superpath path
 
     attr_reader :langcode
 
@@ -61,6 +60,7 @@ module Jekyll
       self.data['html_css_file'] = site.config['WFBaseUrl'] + '/styles/fundamentals.css';
       self.data['strippedDescription'] = Sanitize.fragment(self.data['description'])
       self.data['theme_color'] = '#CFD8DC'
+      self.data['langcode'] = @langcode
 
       # self.data['translations'] = {}
       #
@@ -77,7 +77,9 @@ module Jekyll
 
     def initialisePage()
       # We know the files live in content/<langname>/<relative directory>/
-      self.read_yaml(File.join("content", @langcode, @dir), @name)
+      if (File.exists? File.join("content", @langcode, @dir, @name))
+        self.read_yaml(File.join("content", @langcode, @dir), @name)
+      end
 
       # Check that all the keys in the YAML data is valid
       validateYamlData()
@@ -326,6 +328,10 @@ module Jekyll
       return @_navigation
     end
 
+    def translations
+      return @leafNode.translatedPages
+    end
+
   # This is a method from the Jekyll::Page class
   def path
     return File.join(site.config['WFContentSource'], @langcode, @dir, @name)
@@ -358,7 +364,8 @@ module Jekyll
       %w[ nextPage ] +
       %w[ previousPage ] +
       %w[ outOfDate ] +
-      %w[ navigation ]
+      %w[ navigation ] +
+      %w[ translations ]
     )
   end
   end
